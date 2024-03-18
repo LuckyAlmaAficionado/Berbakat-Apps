@@ -1,0 +1,25 @@
+name: talenta_app
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=3.2.6 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  get: 4.6.6
+  carousel_slider: 4.2.1
+  hexcolor: 3.0.1
+  google_fonts: 6.1.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/images/
+  uses-material-design: true
