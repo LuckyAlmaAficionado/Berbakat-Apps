@@ -3,7 +3,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:hexcolor/hexcolor.dart";
 
 // .. Light
-Color lightGreyColor = HexColor("F6F8FB");
+Color lightGreyColor = HexColor("F5F1EE");
 Color lightBlueColor = HexColor("53C1F9");
 
 // .. Dark
@@ -13,6 +13,7 @@ Color darkBlueColor = Colors.blue.shade900;
 // .. Normal
 Color blueColor = HexColor("407BFF");
 Color whiteColor = Colors.white;
+Color blackColor = Colors.black;
 
 TextStyle blackTextStyle = GoogleFonts.outfit(
   color: Colors.black,

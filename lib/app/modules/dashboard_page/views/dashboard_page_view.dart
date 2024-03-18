@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import 'package:talenta_app/app/shared/theme.dart';
 
 import '../controllers/dashboard_page_controller.dart';
@@ -11,35 +12,41 @@ class DashboardPageView extends GetView<DashboardPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: lightGreyColor,
-      body: ListView(
-        children: [
-          Text('Selamat siang,'),
-          Text('Lucky Alma Aficionado Rigel'),
-          Text('Jangan lupa absen hari ini'),
-
-          // ... service absen
-          Container(
-            width: Get.width,
-            height: Get.height * 0.15,
-            margin: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: lightBlueColor,
-              borderRadius: BorderRadius.circular(5),
+      body: Obx(() => controller.listWidget[controller.selectedIndex.value]),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+            currentIndex: controller.selectedIndex.value,
+            selectedItemColor: blackColor,
+            unselectedItemColor: darkGreyColor,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            unselectedLabelStyle: lightGreyTextStyle.copyWith(
+              fontSize: 12,
             ),
-          ),
-
-          // ... services feature
-          Container(
-            width: Get.width,
-            height: Get.height * 0.25,
-            margin: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(10),
+            selectedLabelStyle: blackTextStyle.copyWith(
+              fontSize: 12,
             ),
-          )
-        ],
-      ),
+            onTap: (index) {
+              controller.selectedIndex.value = index;
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: 'Beranda',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list_alt_sharp),
+                label: 'Pengajuan',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.inbox_outlined),
+                label: 'Inbox',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined),
+                label: 'Akun',
+              ),
+            ],
+          )),
     );
   }
 }

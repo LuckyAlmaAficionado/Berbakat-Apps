@@ -80,12 +80,12 @@ class SliderPageView extends GetView<SliderPageController> {
                                   (index) => AnimatedContainer(
                                     width: (controller.indexSlider == index)
                                         ? 12
-                                        : 7,
+                                        : 5,
                                     height: (controller.indexSlider == index)
                                         ? 12
-                                        : 7,
+                                        : 5,
                                     margin: const EdgeInsets.only(right: 10),
-                                    duration: const Duration(milliseconds: 400),
+                                    duration: const Duration(milliseconds: 300),
                                     curve: Curves.easeInOutQuad,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
