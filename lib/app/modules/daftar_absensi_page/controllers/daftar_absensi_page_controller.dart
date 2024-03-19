@@ -5,9 +5,55 @@ class DaftarAbsensiPageController extends GetxController
     with GetTickerProviderStateMixin {
   late TabController controller;
 
+  RxInt absent = 0.obs;
+  RxInt lateClock = 0.obs;
+  RxInt noClockIn = 0.obs;
+  RxInt NoClockOut = 0.obs;
+  RxInt EarlyClockOut = 0.obs;
+
   @override
   void onInit() {
     controller = TabController(length: 3, vsync: this);
+    setNewDate();
     super.onInit();
+  }
+
+  DateTime selectedDate = DateTime.now();
+
+  late DateTime startDate;
+  late DateTime endDate;
+
+  void setNewDate() {
+    // Dapatkan tanggal hari ini
+
+    // Tentukan tanggal mulai (26 bulan lalu)
+    startDate = DateTime(selectedDate.year, selectedDate.month - 1, 26);
+
+    // Tentukan tanggal berakhir (25 bulan ini)
+    if (selectedDate.day >= 26) {
+      endDate = DateTime(selectedDate.year, selectedDate.month + 1, 26);
+    } else {
+      endDate = DateTime(selectedDate.year, selectedDate.month, 26);
+    }
+  }
+
+  int dateOfMonthLength() {
+    // Hitung panjang rentang tanggal
+    int hariLibur = 0;
+    print(endDate);
+    print(startDate);
+    final Duration dateRange = endDate.difference(startDate);
+    final int dateLength = dateRange.inDays;
+
+    for (int index = 0; index < dateLength; index++) {
+      if (startDate.add(Duration(days: index)).weekday == DateTime.saturday ||
+          startDate.add(Duration(days: index)).weekday == DateTime.sunday) {
+        hariLibur++;
+      }
+    }
+
+    absent.value = dateLength - hariLibur;
+
+    return dateLength;
   }
 }

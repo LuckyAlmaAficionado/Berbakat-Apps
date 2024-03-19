@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+import 'package:talenta_app/app/modules/daftar_absensi_page/controllers/daftar_absensi_page_controller.dart';
 
 import 'package:talenta_app/app/shared/theme.dart';
 
@@ -15,33 +17,24 @@ class RiwayatPageView extends StatefulWidget {
 }
 
 class _RiwayatPageViewState extends State<RiwayatPageView> {
-  DateTime selectedDate = DateTime.now();
+  final daftarC = Get.put(DaftarAbsensiPageController());
 
-  final DateTime today = DateTime.now();
-
-  DateTime startDate =
-      DateTime(DateTime.now().year, DateTime.now().month - 1, 26);
   @override
   Widget build(BuildContext context) {
     // ... hitung tanggal berakhir
-    DateTime endDate;
-    if (today.month == 12) {
-      endDate = DateTime(today.year + 1, 1, 26);
-    } else {
-      endDate = DateTime(today.year, today.month + 1, 26);
-    }
+
+    Get.find<DaftarAbsensiPageController>().setNewDate();
 
     // ... hitung panjang rentang tanggal
-    final Duration dateRange = endDate.difference(startDate);
-    final int dateLenght = dateRange.inDays;
-    return ListView(
+
+    return Column(
       children: [
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
             final dateTime = await showMonthYearPicker(
               context: context,
-              initialDate: selectedDate,
+              initialDate: daftarC.selectedDate,
               firstDate: DateTime(2000),
               lastDate: DateTime(3000),
               initialMonthYearPickerMode: MonthYearPickerMode.month,
@@ -49,7 +42,7 @@ class _RiwayatPageViewState extends State<RiwayatPageView> {
 
             if (dateTime != null) {
               setState(() {
-                startDate = dateTime;
+                daftarC.selectedDate = dateTime;
               });
             }
           },
@@ -70,8 +63,9 @@ class _RiwayatPageViewState extends State<RiwayatPageView> {
                 Icon(Icons.date_range_outlined),
                 const SizedBox(width: 10),
                 Text(
-                  "${DateFormat("MMMM yyyy", "id_ID").format(
-                    DateTime(startDate.year, startDate.month + 1),
+                  "${DateFormat("MMM yyyy", "id_ID").format(
+                    DateTime(
+                        daftarC.startDate.year, daftarC.startDate.month + 1),
                   )}",
                   style: blackTextStyle,
                 ),
@@ -84,120 +78,129 @@ class _RiwayatPageViewState extends State<RiwayatPageView> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.all(10),
-          height: 150,
-          decoration: BoxDecoration(
-            color: lightGreyColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Expanded(
+          child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTileInfo(
-                    title: "Absen",
-                    value: 0,
-                  ),
-                  ListTileInfo(
-                    title: "No clock in",
-                    value: 0,
-                  ),
-                ],
+              Container(
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(10),
+                height: 150,
+                decoration: BoxDecoration(
+                  color: blueColor.withAlpha(40),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(() => ListTileInfo(
+                              title: "Absen",
+                              value: daftarC.absent.value,
+                            )),
+                        ListTileInfo(
+                          title: "No clock in",
+                          value: 0,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTileInfo(
+                          title: "Late clock in",
+                          value: 0,
+                        ),
+                        ListTileInfo(
+                          title: "No clock out",
+                          value: 0,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTileInfo(
+                          title: "Early clock out",
+                          value: 0,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTileInfo(
-                    title: "Late clock in",
-                    value: 0,
-                  ),
-                  ListTileInfo(
-                    title: "No clock out",
-                    value: 0,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTileInfo(
-                    title: "Early clock out",
-                    value: 0,
-                  ),
-                ],
-              )
+              ...List.generate(
+                  daftarC.dateOfMonthLength(),
+                  (index) => Container(
+                        width: Get.width,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      DateFormat("dd MMM", "id_ID").format(
+                                        daftarC.startDate.add(
+                                          Duration(days: index),
+                                        ),
+                                      ),
+                                      style: (daftarC.startDate
+                                                      .add(
+                                                          Duration(days: index))
+                                                      .weekday ==
+                                                  DateTime.saturday ||
+                                              daftarC.startDate
+                                                      .add(
+                                                          Duration(days: index))
+                                                      .weekday ==
+                                                  DateTime.sunday)
+                                          ? GoogleFonts.outfit(
+                                              color: Colors.red,
+                                              fontSize: 16,
+                                            )
+                                          : blackTextStyle.copyWith(
+                                              fontSize: 16,
+                                            ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      'Jam kerja',
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text("-"),
+                                Text("-"),
+                                Icon(
+                                  Icons.keyboard_arrow_right_outlined,
+                                  color: darkGreyColor,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Divider(
+                              thickness: 1,
+                              color: darkGreyColor,
+                            ),
+                          ],
+                        ),
+                      )),
             ],
           ),
         ),
-        ...List.generate(
-            dateLenght,
-            (index) => Container(
-                  width: Get.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                DateFormat("dd MMM", "id_ID").format(
-                                  startDate.add(
-                                    Duration(days: index),
-                                  ),
-                                ),
-                                style: (startDate
-                                                .add(Duration(days: index))
-                                                .weekday ==
-                                            DateTime.saturday ||
-                                        startDate
-                                                .add(Duration(days: index))
-                                                .weekday ==
-                                            DateTime.sunday)
-                                    ? GoogleFonts.outfit(
-                                        color: Colors.red,
-                                        fontSize: 16,
-                                      )
-                                    : blackTextStyle.copyWith(
-                                        fontSize: 16,
-                                      ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                'Jam kerja',
-                                style: blackTextStyle.copyWith(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text("-"),
-                          Text("-"),
-                          Icon(
-                            Icons.keyboard_arrow_right_outlined,
-                            color: darkGreyColor,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Divider(
-                        thickness: 1,
-                        color: darkGreyColor,
-                      ),
-                    ],
-                  ),
-                )),
       ],
     );
   }
