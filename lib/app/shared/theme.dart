@@ -40,6 +40,8 @@ TextStyle blueTextStyle = GoogleFonts.outfit(
 );
 
 // .. FONTWEIGHT
+FontWeight extraLight = FontWeight.w200;
+FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;
 FontWeight medium = FontWeight.w500;
 FontWeight semiBold = FontWeight.w600;
