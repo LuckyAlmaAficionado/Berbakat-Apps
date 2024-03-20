@@ -14,9 +14,14 @@ Color darkBlueColor = Colors.blue.shade900;
 Color blueColor = HexColor("407BFF");
 Color whiteColor = Colors.white;
 Color blackColor = Colors.black;
+Color greenColor = Colors.green;
 
 TextStyle blackTextStyle = GoogleFonts.outfit(
   color: Colors.black,
+);
+
+TextStyle greenTextStyle = GoogleFonts.outfit(
+  color: greenColor,
 );
 
 TextStyle whiteTextStyle = GoogleFonts.outfit(

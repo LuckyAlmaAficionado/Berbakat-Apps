@@ -12,6 +12,7 @@ abstract class Routes {
   static const CAMERA_PAGE = _Paths.CAMERA_PAGE;
   static const ABSEN_PAGE = _Paths.ABSEN_PAGE;
   static const DAFTAR_ABSENSI_PAGE = _Paths.DAFTAR_ABSENSI_PAGE;
+  static const CUTI_PAGE = _Paths.CUTI_PAGE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const CAMERA_PAGE = '/camera-page';
   static const ABSEN_PAGE = '/absen-page';
   static const DAFTAR_ABSENSI_PAGE = '/daftar-absensi-page';
+  static const CUTI_PAGE = '/cuti-page';
 }

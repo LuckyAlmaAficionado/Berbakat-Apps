@@ -19,7 +19,7 @@ class DashboardPageView extends GetView<DashboardPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightGreyColor,
+      backgroundColor: Color.fromARGB(255, 242, 251, 255),
       body: Obx(() => listWidget[controller.selectedIndex.value]),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             currentIndex: controller.selectedIndex.value,

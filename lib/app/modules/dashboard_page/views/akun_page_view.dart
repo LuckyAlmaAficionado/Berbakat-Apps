@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talenta_app/app/modules/akun_service/info_personal_page_view.dart';
+import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class AkunPageView extends StatelessWidget {
@@ -70,9 +72,17 @@ class AkunPageView extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.person_outline_outlined),
-                "Info personal",
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InfoPersonalPageView(),
+                  ),
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.person_outline_outlined),
+                  "Info personal",
+                ),
               ),
               ListTIleInfo(
                 Icon(Icons.account_box_outlined),

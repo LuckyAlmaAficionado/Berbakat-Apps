@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
 import '../../../shared/theme.dart';
@@ -14,6 +15,8 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  final controller = Get.put(DashboardPageController());
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -201,20 +204,106 @@ class _HomePageViewState extends State<HomePageView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    IconWidgetService(
-                      Icons.access_time_filled_sharp,
-                      "Cuti",
-                      HexColor("3883F7"),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.CUTI_PAGE),
+                      child: IconWidgetService(
+                        Icons.access_time_filled_sharp,
+                        "Cuti",
+                        HexColor("3883F7"),
+                      ),
                     ),
                     IconWidgetService(
                       Icons.wallet,
                       "Slip Gaji",
                       HexColor("18B8A6"),
                     ),
-                    IconWidgetService(
-                      Icons.assignment,
-                      "Pengajuan",
-                      HexColor("7D4DFD"),
+                    GestureDetector(
+                      onTap: () => controller.servicePengajuan(context),
+                      child: IconWidgetService(
+                        Icons.assignment,
+                        "Pengajuan",
+                        HexColor("7D4DFD"),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // ... pengumuman
+          Container(
+            width: Get.width,
+            height: (false) ? Get.height * 0.4 : 68,
+            margin: const EdgeInsets.only(top: 10),
+            padding:
+                const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+            decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // ... title
+                Row(
+                  children: [
+                    Text(
+                      "Anggota Tim Anda",
+                      style: blackTextStyle.copyWith(
+                        fontWeight: semiBold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.all(0),
+                      onPressed: () {
+                        Get.dialog(
+                          Center(
+                            child: Container(
+                              width: Get.width * 0.5,
+                              height: Get.width * 0.5,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.groups,
+                                    size: 60,
+                                  ),
+                                  DefaultTextStyle(
+                                    style: blackTextStyle.copyWith(
+                                      fontWeight: regular,
+                                      fontSize: 18,
+                                    ),
+                                    child: Text(
+                                      "Anggota Tim Dalam Divisi Anda",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.info_outline,
+                        size: 15,
+                      ),
+                    ),
+                    new Spacer(),
+                    Text(
+                      "Lihat Semua",
+                      style: lightBlueTextStyle.copyWith(
+                        fontWeight: regular,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),

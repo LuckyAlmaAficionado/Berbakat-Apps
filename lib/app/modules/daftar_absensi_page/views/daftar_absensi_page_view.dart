@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talenta_app/app/modules/daftar_absensi_page/views/absensi_page_view.dart';
 import 'package:talenta_app/app/modules/daftar_absensi_page/views/riwayat_page_view.dart';
+import 'package:talenta_app/app/modules/daftar_absensi_page/views/shift_page_view%20copy.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 import '../controllers/daftar_absensi_page_controller.dart';
@@ -18,10 +20,13 @@ class DaftarAbsensiPageView extends GetView<DaftarAbsensiPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueColor,
+        backgroundColor: darkBlueColor,
         title: Text(
           'Daftar Absensi',
-          style: whiteTextStyle,
+          style: whiteTextStyle.copyWith(
+            fontSize: 18,
+            fontWeight: regular,
+          ),
         ),
         centerTitle: true,
       ),
@@ -49,8 +54,8 @@ class DaftarAbsensiPageView extends GetView<DaftarAbsensiPageController> {
               controller: controller.controller,
               children: [
                 RiwayatPageView(),
-                RiwayatPageView(),
-                RiwayatPageView(),
+                AbsensiPageView(),
+                ShiftPageView(),
               ],
             ),
           ),

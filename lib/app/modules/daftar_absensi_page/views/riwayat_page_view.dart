@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:month_year_picker/month_year_picker.dart';
-import 'package:talenta_app/app/modules/daftar_absensi_page/controllers/daftar_absensi_page_controller.dart';
 
+import 'package:talenta_app/app/modules/daftar_absensi_page/controllers/daftar_absensi_page_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class RiwayatPageView extends StatefulWidget {
@@ -29,7 +28,7 @@ class _RiwayatPageViewState extends State<RiwayatPageView> {
 
     return Column(
       children: [
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         GestureDetector(
           onTap: () async {
             final dateTime = await showMonthYearPicker(

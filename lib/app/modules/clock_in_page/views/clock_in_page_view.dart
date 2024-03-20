@@ -23,8 +23,8 @@ class ClockInPageView extends GetView<ClockInPageController> {
               Text(
                 'Clock In',
                 style: whiteTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: semiBold,
+                  fontWeight: regular,
+                  fontSize: 18,
                 ),
               ),
               Text(

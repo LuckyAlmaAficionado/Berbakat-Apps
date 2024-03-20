@@ -6,6 +6,8 @@ import '../modules/camera_page/bindings/camera_page_binding.dart';
 import '../modules/camera_page/views/camera_page_view.dart';
 import '../modules/clock_in_page/bindings/clock_in_page_binding.dart';
 import '../modules/clock_in_page/views/clock_in_page_view.dart';
+import '../modules/cuti_page/bindings/cuti_page_binding.dart';
+import '../modules/cuti_page/views/cuti_page_view.dart';
 import '../modules/daftar_absensi_page/bindings/daftar_absensi_page_binding.dart';
 import '../modules/daftar_absensi_page/views/daftar_absensi_page_view.dart';
 import '../modules/dashboard_page/bindings/dashboard_page_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.DAFTAR_ABSENSI_PAGE,
       page: () => DaftarAbsensiPageView(),
       binding: DaftarAbsensiPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.CUTI_PAGE,
+      page: () => CutiPageView(),
+      binding: CutiPageBinding(),
     ),
   ];
 }
