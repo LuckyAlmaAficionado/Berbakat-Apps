@@ -5,14 +5,15 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:talenta_app/app/routes/app_pages.dart';
 
+import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 import '../controllers/clock_in_page_controller.dart';
 
 class ClockInPageView extends GetView<ClockInPageController> {
-  const ClockInPageView({Key? key}) : super(key: key);
+  ClockInPageView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +42,9 @@ class ClockInPageView extends GetView<ClockInPageController> {
           backgroundColor: blueColor,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.initializedLocation();
+              },
               icon: Icon(
                 Icons.refresh,
               ),
@@ -84,42 +87,53 @@ class ClockInPageView extends GetView<ClockInPageController> {
         ),
         body: Stack(
           children: [
-            Container(
-              width: Get.width,
-              height: Get.height,
-              child: new FlutterMap(
-                options: new MapOptions(
-                  keepAlive: true,
-                  initialCenter: new LatLng(-7.7751202, 110.3951834),
-                  interactionOptions: InteractionOptions(
-                    enableMultiFingerGestureRace: false,
-                    debugMultiFingerGestureWinner: false,
-                  ),
-                  initialZoom: 17,
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: ['a', 'b', 'c'],
-                    maxZoom: 19,
-                  ),
-                  new MarkerLayer(
-                    markers: [
-                      new Marker(
-                        width: 45.0,
-                        height: 45.0,
-                        point: new LatLng(-7.7751202, 110.3951834),
-                        child: Icon(
-                          Icons.location_on,
-                          color: blueColor,
-                          size: 40,
+            FutureBuilder(
+              future: controller.initializedLocation(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Container(
+                    width: Get.width,
+                    height: Get.height,
+                    child: new FlutterMap(
+                      options: new MapOptions(
+                        keepAlive: true,
+                        initialCenter: new LatLng(controller.latitude.value,
+                            controller.longitude.value),
+                        interactionOptions: InteractionOptions(
+                          enableMultiFingerGestureRace: false,
+                          debugMultiFingerGestureWinner: false,
                         ),
+                        initialZoom: 17,
                       ),
-                    ],
-                  )
-                ],
-              ),
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          subdomains: ['a', 'b', 'c'],
+                          maxZoom: 19,
+                        ),
+                        new MarkerLayer(
+                          markers: [
+                            new Marker(
+                              width: 45.0,
+                              height: 45.0,
+                              point: new LatLng(controller.latitude.value,
+                                  controller.longitude.value),
+                              child: Icon(
+                                Icons.location_on,
+                                color: blueColor,
+                                size: 40,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
             Positioned(
               bottom: 20,

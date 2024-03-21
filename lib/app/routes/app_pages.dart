@@ -42,7 +42,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CLOCK_IN_PAGE,
-      page: () => const ClockInPageView(),
+      page: () => ClockInPageView(),
       binding: ClockInPageBinding(),
     ),
     GetPage(
