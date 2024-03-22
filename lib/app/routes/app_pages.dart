@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/absen_page/bindings/absen_page_binding.dart';
 import '../modules/absen_page/views/absen_page_view.dart';
+import '../modules/akun_services/pengaturan/views/pin_manager_view.dart';
 import '../modules/camera_page/bindings/camera_page_binding.dart';
 import '../modules/camera_page/views/camera_page_view.dart';
 import '../modules/clock_in_page/bindings/clock_in_page_binding.dart';
@@ -16,15 +17,21 @@ import '../modules/sign_in_page/bindings/sign_in_page_binding.dart';
 import '../modules/sign_in_page/views/sign_in_page_view.dart';
 import '../modules/slider_page/bindings/slider_page_binding.dart';
 import '../modules/slider_page/views/slider_page_view.dart';
+import '../modules/validator_pin/bindings/validator_pin_binding.dart';
+import '../modules/validator_pin/views/validator_pin_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SLIDER_PAGE;
+  static const INITIAL = Routes.VALIDATOR_PIN;
 
   static final routes = [
+    GetPage(
+      name: "/pin",
+      page: () => PinManagetView(),
+    ),
     GetPage(
       name: _Paths.SLIDER_PAGE,
       page: () => const SliderPageView(),
@@ -64,6 +71,11 @@ class AppPages {
       name: _Paths.CUTI_PAGE,
       page: () => CutiPageView(),
       binding: CutiPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.VALIDATOR_PIN,
+      page: () => const ValidatorPinView(),
+      binding: ValidatorPinBinding(),
     ),
   ];
 }

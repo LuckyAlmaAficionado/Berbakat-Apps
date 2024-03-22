@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:talenta_app/app/controllers/authentication_controller.dart';
+import 'package:talenta_app/app/modules/akun_services/pengaturan/views/pin_manager_view.dart';
+
 import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
@@ -25,7 +29,7 @@ class _HomePageViewState extends State<HomePageView> {
         children: [
           const SizedBox(height: 20),
           Text(
-            'Selamat siang,',
+            'Selamat ${controller.timeOfDay()},',
             style: blackTextStyle.copyWith(
               fontWeight: semiBold,
               fontSize: 16,
@@ -106,23 +110,26 @@ class _HomePageViewState extends State<HomePageView> {
                               onTap: () {
                                 Get.toNamed(Routes.CLOCK_IN_PAGE);
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/ic_sign_in.png',
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    'Clock In',
-                                    style: blackTextStyle.copyWith(
-                                      fontWeight: semiBold,
-                                      fontSize: 15,
+                              child: Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/ic_sign_in.png',
+                                      height: 30,
+                                      width: 30,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Clock In',
+                                      style: blackTextStyle.copyWith(
+                                        fontWeight: semiBold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -136,23 +143,26 @@ class _HomePageViewState extends State<HomePageView> {
                               onTap: () {
                                 Get.toNamed(Routes.CLOCK_IN_PAGE);
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/ic_sign_out.png',
-                                    height: 33,
-                                    width: 33,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    'Clock Out',
-                                    style: blackTextStyle.copyWith(
-                                      fontWeight: semiBold,
-                                      fontSize: 15,
+                              child: Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/ic_sign_out.png',
+                                      height: 33,
+                                      width: 33,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Clock Out',
+                                      style: blackTextStyle.copyWith(
+                                        fontWeight: semiBold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           )
@@ -212,10 +222,13 @@ class _HomePageViewState extends State<HomePageView> {
                         HexColor("3883F7"),
                       ),
                     ),
-                    IconWidgetService(
-                      Icons.wallet,
-                      "Slip Gaji",
-                      HexColor("18B8A6"),
+                    GestureDetector(
+                      onTap: () => Get.to(PinManagetView()),
+                      child: IconWidgetService(
+                        Icons.wallet,
+                        "Slip Gaji",
+                        HexColor("18B8A6"),
+                      ),
                     ),
                     GestureDetector(
                       onTap: () => controller.servicePengajuan(context),
@@ -261,8 +274,8 @@ class _HomePageViewState extends State<HomePageView> {
                         Get.dialog(
                           Center(
                             child: Container(
-                              width: Get.width * 0.5,
-                              height: Get.width * 0.5,
+                              width: Get.width * 0.7,
+                              height: Get.width * 0.7,
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                 color: whiteColor,
@@ -274,15 +287,26 @@ class _HomePageViewState extends State<HomePageView> {
                                 children: [
                                   Icon(
                                     Icons.groups,
-                                    size: 60,
+                                    size: 100,
                                   ),
                                   DefaultTextStyle(
                                     style: blackTextStyle.copyWith(
-                                      fontWeight: regular,
+                                      fontWeight: semiBold,
                                       fontSize: 18,
                                     ),
                                     child: Text(
-                                      "Anggota Tim Dalam Divisi Anda",
+                                      "Tim Anda akan Muncul",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  DefaultTextStyle(
+                                    style: blackTextStyle.copyWith(
+                                      fontWeight: regular,
+                                      fontSize: 14,
+                                    ),
+                                    child: const Text(
+                                      "Fitur ini akan menampilkan anggota tim yang anda pimpin. Pastikan untuk memverifikasi keanggotaan sebelum melanjutkan",
                                       textAlign: TextAlign.center,
                                     ),
                                   ),

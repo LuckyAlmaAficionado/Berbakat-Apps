@@ -13,6 +13,7 @@ abstract class Routes {
   static const ABSEN_PAGE = _Paths.ABSEN_PAGE;
   static const DAFTAR_ABSENSI_PAGE = _Paths.DAFTAR_ABSENSI_PAGE;
   static const CUTI_PAGE = _Paths.CUTI_PAGE;
+  static const VALIDATOR_PIN = _Paths.VALIDATOR_PIN;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const ABSEN_PAGE = '/absen-page';
   static const DAFTAR_ABSENSI_PAGE = '/daftar-absensi-page';
   static const CUTI_PAGE = '/cuti-page';
+  static const VALIDATOR_PIN = '/validator-pin';
 }

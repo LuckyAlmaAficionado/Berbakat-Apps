@@ -1,12 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class DashboardPageController extends GetxController {
   RxInt selectedIndex = 0.obs;
   RxBool isShowAlert = true.obs;
+
+  AuthenticationController authC = Get.find<AuthenticationController>();
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    // ...
+  }
+
+  // ...
+  String timeOfDay() {
+    DateTime now = DateTime.now();
+    String formattedTime = DateFormat.Hm().format(now);
+
+    // mendapatkan waktu dari jam yang di format
+    int hour = int.parse(formattedTime.split(":").first);
+
+    // Menggunakan logika sederhana untuk menentukan apakah itu pagi, siang, atau malam
+    String timeOfDay;
+    if (hour >= 5 && hour < 12) {
+      timeOfDay = 'Pagi';
+    } else if (hour >= 12 && hour < 18) {
+      timeOfDay = 'Siang';
+    } else {
+      timeOfDay = 'Malam';
+    }
+
+    // Mengembalikan hasil
+    return timeOfDay;
+  }
+
+  // ...
 
   void servicePengajuan(BuildContext context) {
     showModalBottomSheet(

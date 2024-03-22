@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:talenta_app/app/modules/akun_service/info_personal_page_view.dart';
-import 'package:talenta_app/app/routes/app_pages.dart';
+import 'package:talenta_app/app/modules/akun_services/pengaturan/views/pin_view.dart';
+import 'package:talenta_app/app/modules/akun_services/pengaturan/views/ubah_kata_sandi_view.dart';
+
 import 'package:talenta_app/app/shared/theme.dart';
+
+import '../../akun_services/info_saya/info_pekerjaan_view.dart';
+import '../../akun_services/info_saya/info_personal_page_view.dart';
 
 class AkunPageView extends StatelessWidget {
   const AkunPageView({super.key});
@@ -84,9 +89,17 @@ class AkunPageView extends StatelessWidget {
                   "Info personal",
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.account_box_outlined),
-                "Info pekerjaan",
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InfoPekerjaanView(),
+                  ),
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.account_box_outlined),
+                  "Info pekerjaan",
+                ),
               ),
               ListTIleInfo(
                 Icon(Icons.emergency_outlined),
@@ -141,13 +154,29 @@ class AkunPageView extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.lock_open_outlined),
-                "Ubah kata sandi",
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UbahKataSandiView(),
+                  ),
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.lock_open_outlined),
+                  "Ubah kata sandi",
+                ),
               ),
-              ListTIleInfo(
-                Icon(Icons.password_rounded),
-                "PIN",
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PinView(),
+                  ),
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.password_rounded),
+                  "PIN",
+                ),
               ),
               ListTIleInfo(
                 Icon(Icons.tag_faces_sharp),

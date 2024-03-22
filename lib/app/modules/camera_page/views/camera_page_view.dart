@@ -105,7 +105,7 @@ class CameraPageView extends GetView<CameraPageController> {
               width: Get.width,
               child: Image.asset(
                 'assets/images/ic_dotted_border.png',
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),

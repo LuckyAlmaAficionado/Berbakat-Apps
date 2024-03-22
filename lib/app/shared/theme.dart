@@ -44,6 +44,17 @@ TextStyle blueTextStyle = GoogleFonts.outfit(
   color: Colors.blue[800],
 );
 
+TextStyle redTextStyle = GoogleFonts.outfit(
+  color: Colors.red,
+);
+
+// ... TEXTSTYLE APPBAR
+TextStyle appBarTextStyle = GoogleFonts.outfit(
+  fontWeight: regular,
+  color: whiteColor,
+  fontSize: 18,
+);
+
 // .. FONTWEIGHT
 FontWeight extraLight = FontWeight.w200;
 FontWeight light = FontWeight.w300;

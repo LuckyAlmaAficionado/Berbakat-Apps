@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
+import 'perubahan_data_view.dart';
+
 class InfoPersonalPageView extends GetView {
   const InfoPersonalPageView({Key? key}) : super(key: key);
   @override
@@ -19,7 +21,12 @@ class InfoPersonalPageView extends GetView {
           ),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PerubahanDataView(),
+                ),
+              ),
               child: Text(
                 "Ajukan perubahan data",
                 style: blueTextStyle,
