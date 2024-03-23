@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/shared/utils.dart';
 
 import '../../../../shared/theme.dart';
 
-class PinManagetView extends StatefulWidget {
-  const PinManagetView({super.key});
+class SetNewPinView extends StatefulWidget {
+  const SetNewPinView({super.key});
 
   @override
-  State<PinManagetView> createState() => _PinManagetViewState();
+  State<SetNewPinView> createState() => _PinManagetViewState();
 }
 
-class _PinManagetViewState extends State<PinManagetView> {
+class _PinManagetViewState extends State<SetNewPinView> {
   RxString pin = "".obs;
   RxInt currentIndex = 0.obs;
 
@@ -28,12 +30,13 @@ class _PinManagetViewState extends State<PinManagetView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 100),
               Text(
                 (isFirstAttempt.value)
                     ? "Masukan PIN baru"
@@ -78,65 +81,43 @@ class _PinManagetViewState extends State<PinManagetView> {
                 keyboardType: TextInputType.number,
                 onChanged: (value) async {
                   if (isFirstAttempt.value) {
-                    if (currentIndex.value < 6) {
-                      _addNumber(int.parse(value[currentIndex.value]));
-                      if (currentIndex.value == 5) {
-                        // ... Jika password sudah di input semua
-
-                        // ... disimpan terlebih dahulu untuk nanti di sandingkan
-                        tempPIN = _textController.text;
-                        isFirstAttempt(false);
-
-                        /// ... buat untuk pengecekan kedua
-                        setState(() {
-                          currentIndex.value = 0;
-                          _textController.text = "";
-                          pin.value = "";
-                        });
-                        return;
-                      }
-
-                      currentIndex.value++;
+                    if (_textController.text.length == 6) {
+                      tempPIN = _textController.text;
+                      isFirstAttempt(false);
+                      setState(() {
+                        _textController.text = "";
+                      });
                     }
                   } else {
-                    print("pengecekan kedua");
-                    // .... pengecekan kedua
-                    if (currentIndex.value < 6) {
-                      _addNumber(int.parse(value[currentIndex.value]));
-                      if (currentIndex.value == 5) {
-                        // ... Jika password sudah di input semua
-
-                        if (tempPIN.contains(_textController.text)) {
-                          // ... jika berhasil maka
-                          await controller.savePin(_textController.text);
-                          // ...
+                    if (_textController.text.length == 6) {
+                      // ... cek apakah temp sama pin baru sama
+                      if (_textController.text.contains(tempPIN)) {
+                        await controller
+                            .savePin(_textController.text)
+                            .then((value) {
                           Get.back();
                           Utils().snackbarC(
                             "Berhasil..!",
                             "Berhasil mengaktifkan PIN",
                             true,
                           );
-                        } else {
-                          // ... jika salah memasukan pin pertama dan pin kedua
-                          Utils().snackbarC(
-                            "Oh Tidak..!",
-                            "PIN yang anda masukan tidak sama",
-                            false,
-                          );
-                        }
-
-                        /// ... buat untuk pengecekan kedua
-                        setState(() {
-                          currentIndex.value = 0;
-                          _textController.text = "";
-                          pin.value = "";
                         });
-                        return;
+                      } else {
+                        // ... jika pin tidak sama
+                        Utils().snackbarC(
+                          "Oh Tidak..!",
+                          "PIN yang anda masukan tidak sama",
+                          false,
+                        );
                       }
 
-                      currentIndex.value++;
+                      setState(() {
+                        _textController.text = "";
+                      });
                     }
                   }
+
+                  setState(() {});
                 },
                 showCursor: false,
                 decoration: InputDecoration(
@@ -150,17 +131,6 @@ class _PinManagetViewState extends State<PinManagetView> {
     );
   }
 
-  // Method untuk menambahkan angka ke PIN
-  void _addNumber(int number) {
-    setState(() {
-      // Maksimum 6 digit
-      if (pin.value.length < 6) {
-        pin.value += number.toString();
-        _textController.text = pin.value;
-      }
-    });
-  }
-
   // Method untuk membangun dot yang menunjukkan status PIN
   Widget _buildDot(int index) {
     return Container(
@@ -169,7 +139,8 @@ class _PinManagetViewState extends State<PinManagetView> {
       height: 15.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: pin.value.length > index ? darkBlueColor : darkGreyColor,
+        color:
+            _textController.text.length > index ? darkBlueColor : darkGreyColor,
       ),
     );
   }

@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
-import 'package:talenta_app/app/modules/akun_services/pengaturan/views/pin_manager_view.dart';
-import 'package:talenta_app/app/modules/akun_services/pengaturan/views/ubah_pin_view.dart';
+import 'package:talenta_app/app/modules/akun_services/pengaturan/views/reset_pin_view.dart';
+import 'package:talenta_app/app/modules/akun_services/pengaturan/views/set_new_pin.dart';
+import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class PinView extends GetView {
@@ -54,10 +57,16 @@ class PinView extends GetView {
                             print(controller.isPinActivated.value);
                             if (controller.isPinActivated.value) {
                               // jika pin aktif
-                              await controller.resetPin();
+                              // await controller.resetPin();
+                              Get.toNamed(
+                                Routes.VALIDATOR_PIN,
+                                arguments: "non-aktif",
+                              );
                             } else {
+                              // Get.toNamed(Routes.VALIDATOR_PIN,
+                              //     arguments: "aktif");
                               // jika pin tidak aktif
-                              Get.to(PinManagetView());
+                              Get.to(SetNewPinView());
                             }
                           })),
                     ],
@@ -123,7 +132,10 @@ class PinView extends GetView {
                         color: darkGreyColor,
                       ),
                       InkWell(
-                        onTap: () => Get.to(UbahPinView()),
+                        onTap: () => Get.to(
+                          ResetPinView(),
+                          transition: Transition.cupertino,
+                        ),
                         child: Container(
                           padding: const EdgeInsets.all(15),
                           child: Column(

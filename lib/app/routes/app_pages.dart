@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 
+import 'package:talenta_app/app/shared/detail_info_absensi_view.dart';
+
 import '../modules/absen_page/bindings/absen_page_binding.dart';
 import '../modules/absen_page/views/absen_page_view.dart';
-import '../modules/akun_services/pengaturan/views/pin_manager_view.dart';
 import '../modules/camera_page/bindings/camera_page_binding.dart';
 import '../modules/camera_page/views/camera_page_view.dart';
 import '../modules/clock_in_page/bindings/clock_in_page_binding.dart';
@@ -25,12 +26,13 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.VALIDATOR_PIN;
+  // static const INITIAL = Routes.DASHBOARD_PAGE;
+  static const INITIAL = "/detail-info-absensi-view";
 
   static final routes = [
     GetPage(
-      name: "/pin",
-      page: () => PinManagetView(),
+      name: "/detail-info-absensi-view",
+      page: () => DetailInfoAbsensiView(),
     ),
     GetPage(
       name: _Paths.SLIDER_PAGE,
@@ -74,7 +76,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VALIDATOR_PIN,
-      page: () => const ValidatorPinView(),
+      page: () => ValidatorPinView(),
       binding: ValidatorPinBinding(),
     ),
   ];

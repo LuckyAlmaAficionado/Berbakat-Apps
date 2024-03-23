@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
 import 'package:talenta_app/app/shared/theme.dart';
+import 'package:talenta_app/app/shared/utils.dart';
 
 import '../controllers/clock_in_page_controller.dart';
 
@@ -21,7 +22,7 @@ class ClockInPageView extends GetView<ClockInPageController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Clock In',
+                controller.statusAbsensi.value.toUpperCase(),
                 style: whiteTextStyle.copyWith(
                   fontWeight: regular,
                   fontSize: 18,
@@ -38,10 +39,12 @@ class ClockInPageView extends GetView<ClockInPageController> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: blueColor,
+          backgroundColor: darkBlueColor,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await controller.initializedLocation();
+              },
               icon: Icon(
                 Icons.refresh,
               ),
@@ -51,11 +54,11 @@ class ClockInPageView extends GetView<ClockInPageController> {
             preferredSize: Size.fromHeight(120),
             child: Container(
               width: Get.width,
-              height: Get.height * 0.1,
+              height: 80,
               padding: const EdgeInsets.all(15),
               margin: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: whiteColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -84,42 +87,67 @@ class ClockInPageView extends GetView<ClockInPageController> {
         ),
         body: Stack(
           children: [
-            Container(
-              width: Get.width,
-              height: Get.height,
-              child: new FlutterMap(
-                options: new MapOptions(
-                  keepAlive: true,
-                  initialCenter: new LatLng(-7.7751202, 110.3951834),
-                  interactionOptions: InteractionOptions(
-                    enableMultiFingerGestureRace: false,
-                    debugMultiFingerGestureWinner: false,
-                  ),
-                  initialZoom: 17,
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: ['a', 'b', 'c'],
-                    maxZoom: 19,
-                  ),
-                  new MarkerLayer(
-                    markers: [
-                      new Marker(
-                        width: 45.0,
-                        height: 45.0,
-                        point: new LatLng(-7.7751202, 110.3951834),
-                        child: Icon(
-                          Icons.location_on,
-                          color: blueColor,
-                          size: 40,
+            FutureBuilder(
+              future: controller.initializedLocation(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Container(
+                    width: Get.width,
+                    height: Get.height,
+                    child: new FlutterMap(
+                      options: new MapOptions(
+                        keepAlive: true,
+                        initialCenter: new LatLng(controller.latitude.value,
+                            controller.longitude.value),
+                        interactionOptions: InteractionOptions(
+                          enableMultiFingerGestureRace: false,
+                          debugMultiFingerGestureWinner: false,
+                        ),
+                        initialZoom: 17,
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          subdomains: ['a', 'b', 'c'],
+                          maxZoom: 19,
+                        ),
+                        new MarkerLayer(
+                          markers: [
+                            new Marker(
+                              width: 45.0,
+                              height: 45.0,
+                              point: new LatLng(controller.latitude.value,
+                                  controller.longitude.value),
+                              child: Icon(
+                                Icons.location_on,
+                                color: blueColor,
+                                size: 40,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Tunggu Sebentar Yaa..!",
+                        style: blueTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
                         ),
                       ),
                     ],
-                  )
-                ],
-              ),
+                  ));
+                }
+              },
             ),
             Positioned(
               bottom: 20,
@@ -127,18 +155,9 @@ class ClockInPageView extends GetView<ClockInPageController> {
               right: 20,
               child: SizedBox(
                 height: 50,
-                child: ElevatedButton(
-                  onPressed: () => Get.toNamed(Routes.CAMERA_PAGE),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: blueColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                  child: Text(
-                    "Lampirkan",
-                    style: whiteTextStyle,
-                  ),
+                child: CustomButton(
+                  title: "Lampirkan",
+                  onTap: () => Get.toNamed(Routes.CAMERA_PAGE),
                 ),
               ),
             )

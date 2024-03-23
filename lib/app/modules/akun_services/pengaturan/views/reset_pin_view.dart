@@ -4,14 +4,14 @@ import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 import 'package:talenta_app/app/shared/utils.dart';
 
-class UbahPinView extends StatefulWidget {
-  const UbahPinView({super.key});
+class ResetPinView extends StatefulWidget {
+  const ResetPinView({super.key});
 
   @override
-  State<UbahPinView> createState() => _UbahPinViewState();
+  State<ResetPinView> createState() => _UbahPinViewState();
 }
 
-class _UbahPinViewState extends State<UbahPinView> {
+class _UbahPinViewState extends State<ResetPinView> {
   // Menggunakan RxString untuk memungkinkan pemantauan perubahan nilai
   RxString pin = ''.obs;
 
@@ -47,9 +47,7 @@ class _UbahPinViewState extends State<UbahPinView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 200,
-              ),
+              const SizedBox(height: 100),
               Obx(() => Text(
                     "Masukan PIN ${(isLatestPassTrue.value) ? "Baru" : "saat ini"}",
                     style: blackTextStyle.copyWith(
@@ -89,50 +87,84 @@ class _UbahPinViewState extends State<UbahPinView> {
                 keyboardType: TextInputType.number,
                 onChanged: (value) async {
                   if (isLatestPassTrue.value) {
-                    print('testing');
-                    if (curIndex < 6) {
-                      _addNumber(int.parse(value[curIndex]));
-                      if (curIndex == 5) {
-                        authC.savePin(_textController.text);
-                        setState(() {
-                          _textController.text = "";
-                          pin.value = "";
-                          curIndex = 0;
-                        });
-                        Get.back();
-                        Utils().snackbarC(
-                            "Berhasil", "berhasil mengubah PIN", true);
-                        return;
-                      }
-                      curIndex++;
+                    if (_textController.text.length == 6) {
+                      authC.savePin(_textController.text);
+                      Get.back();
+                      Utils().snackbarC(
+                        "Berhasil...!",
+                        "Berhasil mengubah PIN",
+                        true,
+                      );
+                      setState(() {
+                        _textController.text = "";
+                      });
                     }
                   } else {
-                    if (curIndex < 6) {
-                      _addNumber(int.parse(value[curIndex]));
-                      if (curIndex == 5) {
-                        if (await authC.getPin(_textController.text)) {
-                          isLatestPassTrue(true);
-                          setState(() {
-                            _textController.text = "";
-                            pin.value = "";
-                            curIndex = 0;
-                          });
-                          return;
-                        }
+                    if (_textController.text.length == 6) {
+                      if (await authC.getPin(_textController.text)) {
+                        isLatestPassTrue(true);
                         setState(() {
                           _textController.text = "";
-                          pin.value = "";
-                          curIndex = 0;
                         });
-                        Utils().snackbarC("Oh Tidak..!",
-                            "Sepertinya kamu memasukan PIN yang salah", false);
+
                         return;
                       }
-                      curIndex++;
-                    } else {
-                      print("maksimal");
+
+                      setState(() {
+                        _textController.text = "";
+                        Utils().snackbarC("Oh Tidak...!",
+                            "Sepertinya kamu memasukan PIN yang salah", false);
+                      });
                     }
                   }
+
+                  setState(() {});
+
+                  // if (isLatestPassTrue.value) {
+                  //   print('testing');
+                  //   if (curIndex < 6) {
+                  //     _addNumber(int.parse(value[curIndex]));
+                  //     if (curIndex == 5) {
+                  //       authC.savePin(_textController.text);
+                  //       setState(() {
+                  //         _textController.text = "";
+                  //         pin.value = "";
+                  //         curIndex = 0;
+                  //       });
+                  //       Get.back();
+                  //       Utils().snackbarC(
+                  //           "Berhasil", "berhasil mengubah PIN", true);
+                  //       return;
+                  //     }
+                  //     curIndex++;
+                  //   }
+                  // } else {
+                  //   if (curIndex < 6) {
+                  //     _addNumber(int.parse(value[curIndex]));
+                  //     if (curIndex == 5) {
+                  //       if (await authC.getPin(_textController.text)) {
+                  //         isLatestPassTrue(true);
+                  //         setState(() {
+                  //           _textController.text = "";
+                  //           pin.value = "";
+                  //           curIndex = 0;
+                  //         });
+                  //         return;
+                  //       }
+                  //       setState(() {
+                  //         _textController.text = "";
+                  //         pin.value = "";
+                  //         curIndex = 0;
+                  //       });
+                  //       Utils().snackbarC("Oh Tidak..!",
+                  //           "Sepertinya kamu memasukan PIN yang salah", false);
+                  //       return;
+                  //     }
+                  //     curIndex++;
+                  //   } else {
+                  //     print("maksimal");
+                  //   }
+                  // }
                 },
                 showCursor: false,
                 decoration: InputDecoration(
@@ -143,34 +175,19 @@ class _UbahPinViewState extends State<UbahPinView> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     authC.resetPin();
-      //   },
-      // ),
     );
-  }
-
-  // Method untuk menambahkan angka ke PIN
-  void _addNumber(int number) {
-    setState(() {
-      // Maksimum 6 digit
-      if (pin.value.length < 6) {
-        pin.value += number.toString();
-        _textController.text = pin.value;
-      }
-    });
   }
 
   // Method untuk membangun dot yang menunjukkan status PIN
   Widget _buildDot(int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.0),
-      width: 20.0,
-      height: 20.0,
+      width: 15.0,
+      height: 15.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: pin.value.length > index ? Colors.blue : Colors.grey,
+        color:
+            _textController.text.length > index ? darkBlueColor : darkGreyColor,
       ),
     );
   }

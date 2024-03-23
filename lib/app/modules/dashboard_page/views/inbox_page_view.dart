@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
+import 'package:talenta_app/app/modules/dashboard_page/views/detail_inbox_view.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class InboxPageView extends StatefulWidget {
@@ -301,6 +302,10 @@ class NotificationTabBar extends StatelessWidget {
         ),
         ...List.generate(3, (index) {
           return ListTile(
+            onTap: () => Get.to(
+              DetailInboxView(),
+              transition: Transition.downToUp,
+            ),
             minVerticalPadding: 10,
             trailing: Icon(Icons.navigate_next_sharp),
             leading: CircleAvatar(

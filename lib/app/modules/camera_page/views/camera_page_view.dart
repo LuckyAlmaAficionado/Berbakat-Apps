@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:talenta_app/app/shared/utils.dart';
 
 import '../../../shared/theme.dart';
 import '../controllers/camera_page_controller.dart';
@@ -35,7 +36,7 @@ class CameraPageView extends GetView<CameraPageController> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: blueColor,
+        backgroundColor: darkBlueColor,
         actions: [
           IconButton(
             onPressed: () {},
@@ -115,7 +116,6 @@ class CameraPageView extends GetView<CameraPageController> {
             right: 0,
             child: Container(
                 padding: const EdgeInsets.all(20),
-                height: Get.height * 0.21,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -146,24 +146,9 @@ class CameraPageView extends GetView<CameraPageController> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      width: Get.width,
-                      height: 45,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: blueColor,
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          "Kirim",
-                          style: whiteTextStyle.copyWith(
-                            fontWeight: semiBold,
-                          ),
-                        ),
-                      ),
+                    CustomButton(
+                      title: "Kirim",
+                      onTap: () {},
                     ),
                   ],
                 )),

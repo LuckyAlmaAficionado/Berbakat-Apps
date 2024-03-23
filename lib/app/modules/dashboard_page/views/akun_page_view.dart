@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/file_saya_view.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_payroll_view.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/peringatan_view.dart';
 import 'package:talenta_app/app/modules/akun_services/pengaturan/views/pin_view.dart';
 import 'package:talenta_app/app/modules/akun_services/pengaturan/views/ubah_kata_sandi_view.dart';
 
 import 'package:talenta_app/app/shared/theme.dart';
+import 'package:talenta_app/app/shared/utils.dart';
 
 import '../../akun_services/info_saya/info_pekerjaan_view.dart';
 import '../../akun_services/info_saya/info_personal_page_view.dart';
@@ -113,21 +117,33 @@ class AkunPageView extends StatelessWidget {
                 Icon(Icons.school_outlined),
                 "Pendidikan dan pengalaman",
               ),
-              ListTIleInfo(
-                Icon(Icons.account_balance_wallet_outlined),
-                "Info payroll",
+              GestureDetector(
+                onTap: () => Get.to(InfoPayrollView()),
+                child: ListTIleInfo(
+                  Icon(Icons.account_balance_wallet_outlined),
+                  "Info payroll",
+                ),
               ),
               ListTIleInfo(
                 Icon(Icons.info_outline),
                 "Info tambahan",
               ),
-              ListTIleInfo(
-                Icon(Icons.folder_copy_outlined),
-                "File saya",
+              GestureDetector(
+                onTap: () => Get.to(FileSayaView()),
+                child: ListTIleInfo(
+                  Icon(Icons.folder_copy_outlined),
+                  "File saya",
+                ),
               ),
-              ListTIleInfo(
-                Icon(Icons.warning_amber_rounded),
-                "Peringatan",
+              GestureDetector(
+                onTap: () => Get.to(
+                  PeringatanView(),
+                  transition: Transition.downToUp,
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.warning_amber_rounded),
+                  "Peringatan",
+                ),
               ),
             ],
           ),
@@ -252,13 +268,19 @@ class AkunPageView extends StatelessWidget {
                 Icon(Icons.gpp_good_outlined),
                 "Keamanan & Privasi",
               ),
-              ListTIleInfo(
-                Icon(Icons.feedback_outlined),
-                "Berikan feedback",
+              GestureDetector(
+                onTap: () => Utils().feedbackApps(context),
+                child: ListTIleInfo(
+                  Icon(Icons.feedback_outlined),
+                  "Berikan feedback",
+                ),
               ),
-              ListTIleInfo(
-                Icon(Icons.exit_to_app),
-                "Keluar",
+              GestureDetector(
+                onTap: () => Utils().exitRequestDialog(),
+                child: ListTIleInfo(
+                  Icon(Icons.exit_to_app),
+                  "Keluar",
+                ),
               ),
             ],
           ),
