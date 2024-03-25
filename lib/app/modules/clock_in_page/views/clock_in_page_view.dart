@@ -73,7 +73,7 @@ class ClockInPageView extends GetView<ClockInPageController> {
                     children: [
                       Icon(Icons.date_range_outlined),
                       Text(
-                        "${DateFormat("dd MM yyyy").format(DateTime.now())} (08:00 - 16:45)",
+                        "${DateFormat("dd MMM yyyy").format(DateTime.now())} (08:00 - 16:45)",
                         style: blackTextStyle.copyWith(
                           fontWeight: semiBold,
                         ),

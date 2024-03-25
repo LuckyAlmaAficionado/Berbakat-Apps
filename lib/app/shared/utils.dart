@@ -70,7 +70,7 @@ class Utils {
         ),
         builder: (context) {
           return Container(
-            height: Get.height * 0.3,
+            height: 220,
             padding: const EdgeInsets.all(20),
             width: Get.width,
             child: Column(

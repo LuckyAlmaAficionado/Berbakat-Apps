@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:talenta_app/app/controllers/file_picker_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 import 'package:talenta_app/app/shared/utils.dart';
 
@@ -14,6 +16,9 @@ class PengajuanAbsensiView extends StatefulWidget {
 
 class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
   TextEditingController timeController = TextEditingController();
+  bool clockIn = false;
+  bool clockOut = false;
+  String path = "";
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
           ),
           backgroundColor: darkBlueColor,
           centerTitle: true,
+          elevation: 0,
         ),
         body: Stack(
           children: [
@@ -32,7 +38,8 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
               height: Get.height,
               padding: const EdgeInsets.all(20),
               width: Get.width,
-              child: Column(
+              child: ListView(
+                padding: const EdgeInsets.all(0),
                 children: [
                   // ... pilih tanggal
                   TextFormField(
@@ -48,24 +55,163 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
                     ),
                     readOnly: true, // Jadikan text field hanya bisa dibaca
                   ),
-
-                  // ... fiedl lainnya
-                  Container(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: timeController,
-                          decoration: InputDecoration(
-                            labelText: 'Pick a date',
-                            suffixIcon: Icon(Icons.calendar_today),
-                            border: OutlineInputBorder(),
-                          ),
-                          readOnly:
-                              true, // Jadikan text field hanya bisa dibaca
-                        ),
-                      ],
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    title: Text(
+                      "Pilih shift",
+                      style: blackTextStyle,
+                    ),
+                    subtitle: Text(
+                      "Office 2 (${DateFormat("HH:MM").format(DateTime.now())} - ${DateFormat("HH:MM").format(DateTime.now())})",
+                      style: darkGreyTextStyle,
                     ),
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Clock In",
+                              style: blackTextStyle,
+                            ),
+                            const Gap(4),
+                            Text(
+                              "07:38",
+                              style: darkGreyTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Clock Out",
+                              style: blackTextStyle,
+                            ),
+                            const Gap(4),
+                            Text(
+                              "-",
+                              style: darkGreyTextStyle,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: darkGreyColor,
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    leading: Checkbox(
+                      onChanged: (value) {
+                        setState(() {
+                          clockIn = value!;
+                        });
+                      },
+                      value: clockIn,
+                    ),
+                    title: Text(
+                      "Clock In",
+                      style: blackTextStyle.copyWith(
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Jam',
+                        hintStyle: darkGreyTextStyle,
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: darkGreyColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    leading: Checkbox(
+                      onChanged: (value) {
+                        setState(() {
+                          clockOut = value!;
+                        });
+                      },
+                      value: clockOut,
+                    ),
+                    title: Text(
+                      "Clock Out",
+                      style: blackTextStyle.copyWith(
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Jam',
+                        hintStyle: darkGreyTextStyle,
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: darkGreyColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Gap(10),
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: "Deksripsi",
+                        hintStyle: darkGreyTextStyle,
+                        prefixIcon: Icon(Icons.format_align_left_outlined),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: darkGreyColor,
+                          ),
+                        )),
+                  ),
+                  const Gap(10),
+
+                  GestureDetector(
+                    onTap: () async {
+                      print("mengambil file");
+                      path = await Get.put(FilePickerController())
+                          .openFileExplorer();
+                      if (path.isEmpty) {
+                        print('tidak ada file yang di pick');
+                      } else {
+                        setState(() {
+                          print(path);
+                        });
+                      }
+                    },
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      title: Text(
+                        "Unggah file",
+                        style: blackTextStyle,
+                      ),
+                      subtitle: TextField(
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.task_outlined),
+                          hintText: (path.isEmpty)
+                              ? "Max file 10 mb (click here..!)"
+                              : path.split("/").last,
+                          hintMaxLines: 2,
+                          hintStyle: darkGreyTextStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Gap(80),
                 ],
               ),
             ),

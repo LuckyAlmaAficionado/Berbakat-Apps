@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talenta_app/app/routes/app_pages.dart';
 
 class AuthenticationController extends GetxController {
   // RxBools untuk status pin dan kebutuhan pin saat membuka aplikasi
@@ -18,10 +19,10 @@ class AuthenticationController extends GetxController {
   // Validasi data pin dari penyimpanan
   Future<bool> validatorPIN() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isPinActivatedValue = prefs.getBool('isPinActivated');
+    bool? isPinActivatedValue = await prefs.getBool('isPinActivated');
     bool? isNeededPinWhenOpenAppsValue =
-        prefs.getBool('isNeededPinWhenOpenApps');
-    String? pinValue = prefs.getString('pin');
+        await prefs.getBool('isNeededPinWhenOpenApps');
+    String? pinValue = await prefs.getString('pin');
 
     if (isPinActivatedValue != null &&
         isNeededPinWhenOpenAppsValue != null &&
@@ -29,7 +30,7 @@ class AuthenticationController extends GetxController {
       isPinActivated(isPinActivatedValue);
       isNeededPinWhenOpenApps(isNeededPinWhenOpenAppsValue);
       pin.value = pinValue;
-      return true;
+      return isNeededPinWhenOpenAppsValue;
     } else {
       initializedValidator();
       return false;
@@ -76,5 +77,14 @@ class AuthenticationController extends GetxController {
         'isNeededPinWhenOpenApps', isNeededPinWhenOpenApps.toggle().value);
     prefs.setString('pin', pin.value);
     validatorPIN();
+  }
+
+  validatorPinWhenOpenApps() {
+    if (isNeededPinWhenOpenApps.value) {
+      Get.toNamed(Routes.VALIDATOR_PIN);
+    } else {
+      // jika aplikasi tidak di buka mengggunakan pin
+      Get.toNamed(Routes.DASHBOARD_PAGE);
+    }
   }
 }

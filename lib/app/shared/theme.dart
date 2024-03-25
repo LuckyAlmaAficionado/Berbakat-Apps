@@ -56,7 +56,7 @@ TextStyle appBarTextStyle = GoogleFonts.outfit(
 );
 
 // .. FONTWEIGHT
-FontWeight extraLight = FontWeight.w200;
+FontWeight extraLight = FontWeight.w100;
 FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;
 FontWeight medium = FontWeight.w500;

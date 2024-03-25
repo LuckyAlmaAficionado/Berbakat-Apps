@@ -8,10 +8,11 @@ import '../controllers/validator_pin_controller.dart';
 class ValidatorPinView extends GetView<ValidatorPinController> {
   ValidatorPinView({Key? key}) : super(key: key);
 
-  final argument = Get.arguments;
+  var argument = Get.arguments ?? "aktif";
 
   @override
   Widget build(BuildContext context) {
+    print(argument);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -75,7 +76,10 @@ class ValidatorPinView extends GetView<ValidatorPinController> {
                 onChanged: (value) {
                   controller.enteredPin.value = value;
                   // Panggil fungsi untuk memeriksa PIN setiap kali PIN dimasukkan
-                  controller.checkPin(argument);
+                  if (controller.validatorC.text.length == 6) {
+                    print("masuk sini");
+                    controller.checkPin(argument);
+                  }
                 },
                 decoration: InputDecoration(
                   border: InputBorder.none,

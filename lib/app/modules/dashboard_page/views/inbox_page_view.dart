@@ -6,6 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
 import 'package:talenta_app/app/modules/dashboard_page/views/detail_inbox_view.dart';
+import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 class InboxPageView extends StatefulWidget {
@@ -103,7 +104,8 @@ class PersetujuanTabBar extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       children: [
         customTile(
-          () {},
+          () =>
+              Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Reimbursement"),
           Icon(
             Icons.developer_board,
             color: HexColor("15B6A7"),
@@ -114,7 +116,7 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Cuti"),
           Icon(
             Icons.access_time_filled_sharp,
             color: HexColor("3A84F3"),
@@ -125,7 +127,7 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Absensi"),
           Icon(
             Icons.location_on_sharp,
             color: HexColor("F59E0C"),
@@ -136,7 +138,7 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Lembur"),
           Icon(
             Icons.more_time_sharp,
             color: HexColor("FB7316"),
@@ -147,7 +149,8 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE,
+              arguments: "Perubahan shift"),
           Icon(
             Icons.business_center_rounded,
             color: HexColor("EE4443"),
@@ -158,7 +161,8 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () =>
+              Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Perubahan data"),
           Icon(
             Icons.account_box_sharp,
             color: HexColor("8B5DFB"),
@@ -169,7 +173,7 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE, arguments: "Formulir"),
           Icon(
             Icons.format_align_left_outlined,
             color: HexColor("8D5BF8"),
@@ -180,7 +184,8 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE,
+              arguments: "Penambahan karyawan"),
           Icon(
             Icons.person,
             color: HexColor("F8BF28"),
@@ -191,7 +196,8 @@ class PersetujuanTabBar extends StatelessWidget {
           ),
         ),
         customTile(
-          () {},
+          () => Get.toNamed(Routes.PERSETUJUAN_PAGE,
+              arguments: "Pemindahan karyawan"),
           Icon(
             Icons.folder_shared_sharp,
             color: HexColor("F69F05"),
@@ -236,7 +242,7 @@ class NotificationTabBar extends StatelessWidget {
           () => AnimatedContainer(
             duration: const Duration(seconds: 1),
             curve: Curves.bounceOut,
-            height: (dashC.isShowAlert.value) ? Get.height * 0.22 : 0,
+            height: (dashC.isShowAlert.value) ? 180 : 0,
             width: (dashC.isShowAlert.value) ? Get.width : 0,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),

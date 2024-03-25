@@ -39,7 +39,7 @@ class ClockInPageController extends GetxController {
   isWithinRange() {
     print("masuk sini");
     bool result = locationC.isWithinRange(
-        latitude.value, longitude.value, -9.774974, 110.395337, 50);
+        latitude.value, longitude.value, -7.774941, 110.395369, 100);
 
     (result)
         ? dev.log("dalam jangkauan")

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/perubahan_shift_view.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
@@ -54,7 +55,7 @@ class DashboardPageController extends GetxController {
       ),
       isScrollControlled: true,
       builder: (context) => Container(
-        height: Get.height * 0.45,
+        height: 320,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -106,7 +107,7 @@ class DashboardPageController extends GetxController {
                         children: [
                           Icon(
                             Icons.task_outlined,
-                            size: 40,
+                            size: 30,
                           ),
                           const SizedBox(width: 10),
                           Text(
@@ -128,7 +129,7 @@ class DashboardPageController extends GetxController {
                         children: [
                           Icon(
                             Icons.access_time_rounded,
-                            size: 40,
+                            size: 30,
                           ),
                           const SizedBox(width: 10),
                           Text(
@@ -150,12 +151,14 @@ class DashboardPageController extends GetxController {
                         children: [
                           Icon(
                             Icons.location_history_outlined,
-                            size: 40,
+                            size: 30,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             "Absensi",
-                            style: GoogleFonts.outfit(fontSize: 16),
+                            style: GoogleFonts.outfit(
+                              fontSize: 16,
+                            ),
                           ),
                           new Spacer(),
                           Icon(Icons.keyboard_arrow_right_rounded),
@@ -165,14 +168,17 @@ class DashboardPageController extends GetxController {
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.to(
+                      PerubahanShiftView(),
+                      transition: Transition.cupertino,
+                    ),
                     child: Container(
                       color: Colors.transparent,
                       child: Row(
                         children: [
                           Icon(
                             Icons.work_outline_outlined,
-                            size: 40,
+                            size: 30,
                           ),
                           const SizedBox(width: 10),
                           Text(

@@ -14,6 +14,10 @@ abstract class Routes {
   static const DAFTAR_ABSENSI_PAGE = _Paths.DAFTAR_ABSENSI_PAGE;
   static const CUTI_PAGE = _Paths.CUTI_PAGE;
   static const VALIDATOR_PIN = _Paths.VALIDATOR_PIN;
+  static const SLIP_GAJI_PAGE = _Paths.SLIP_GAJI_PAGE;
+  static const PERSETUJUAN = _Paths.PERSETUJUAN;
+  static const PERSETUJUAN_PAGE = _Paths.PERSETUJUAN_PAGE;
+  static const TELAT_MASUK_PAGE = _Paths.TELAT_MASUK_PAGE;
 }
 
 abstract class _Paths {
@@ -29,4 +33,8 @@ abstract class _Paths {
   static const DAFTAR_ABSENSI_PAGE = '/daftar-absensi-page';
   static const CUTI_PAGE = '/cuti-page';
   static const VALIDATOR_PIN = '/validator-pin';
+  static const SLIP_GAJI_PAGE = '/slip-gaji-page';
+  static const PERSETUJUAN = '/persetujuan';
+  static const PERSETUJUAN_PAGE = '/persetujuan-page';
+  static const TELAT_MASUK_PAGE = '/telat-masuk-page';
 }

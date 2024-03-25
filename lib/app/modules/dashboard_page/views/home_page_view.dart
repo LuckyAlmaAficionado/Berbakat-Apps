@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -6,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:talenta_app/app/modules/akun_services/pengaturan/views/set_new_pin.dart';
 
 import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
+import 'package:talenta_app/app/modules/validator_pin/views/validator_pin_view.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
 import '../../../shared/theme.dart';
@@ -26,6 +29,7 @@ class _HomePageViewState extends State<HomePageView> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SafeArea(
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             const SizedBox(height: 20),
             Text(
@@ -218,6 +222,14 @@ class _HomePageViewState extends State<HomePageView> {
                         "Kalender",
                         HexColor("3883F7"),
                       ),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.TELAT_MASUK_PAGE),
+                        child: IconWidgetService(
+                          Icons.access_time,
+                          "Telat Masuk",
+                          HexColor("18B8A6"),
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -232,7 +244,13 @@ class _HomePageViewState extends State<HomePageView> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(SetNewPinView()),
+                        onTap: () =>
+                            (controller.authC.isNeededPinWhenOpenApps.value)
+                                ? Get.toNamed(
+                                    Routes.VALIDATOR_PIN,
+                                    arguments: "slip-gaji",
+                                  )
+                                : Get.toNamed(Routes.SLIP_GAJI_PAGE),
                         child: IconWidgetService(
                           Icons.wallet,
                           "Slip Gaji",
@@ -245,6 +263,13 @@ class _HomePageViewState extends State<HomePageView> {
                           Icons.assignment,
                           "Pengajuan",
                           HexColor("7D4DFD"),
+                        ),
+                      ),
+                      GestureDetector(
+                        child: IconWidgetService(
+                          Icons.present_to_all_rounded,
+                          "Izin Kembali",
+                          HexColor("FA7113"),
                         ),
                       ),
                     ],
@@ -347,7 +372,7 @@ class _HomePageViewState extends State<HomePageView> {
             // ... pengumuman
             Container(
               width: Get.width,
-              height: Get.height * 0.4,
+              height: 400,
               margin: const EdgeInsets.only(top: 10),
               padding: const EdgeInsets.only(
                   top: 10, left: 20, right: 20, bottom: 10),
@@ -381,7 +406,8 @@ class _HomePageViewState extends State<HomePageView> {
                   const SizedBox(height: 5),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: 3,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: 5,
                       itemBuilder: (context, index) {
                         return Container(
                           width: Get.width,

@@ -11,6 +11,7 @@ import 'package:month_year_picker/month_year_picker.dart';
 
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/controllers/camera_data_controller.dart';
+import 'package:talenta_app/app/shared/splash.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -31,18 +32,22 @@ Future<void> main() async {
       statusBarColor: Colors.transparent,
     ));
   }
-  await initializeDateFormatting("id_ID", null).then(
-    (value) => runApp(
-      MyApp(),
-    ),
-  );
+  await initializeDateFormatting("id_ID", null);
+  final authC = await Get.put(AuthenticationController(), permanent: true);
+
+  await authC.validatorPIN().then(
+        (value) => runApp(
+          MyApp(
+            authC: authC,
+          ),
+        ),
+      );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key});
+  MyApp({Key? key, required this.authC});
 
-  final AuthenticationController authC =
-      Get.put(AuthenticationController(), permanent: true);
+  final AuthenticationController authC;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +55,47 @@ class MyApp extends StatelessWidget {
       title: "BERBAKAT",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      initialRoute: AppPages.INITIAL,
+      initialRoute: Routes.DASHBOARD_PAGE,
       getPages: AppPages.routes,
       localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         MonthYearPickerLocalizations.delegate,
       ],
+    );
+
+    return FutureBuilder(
+      future: authC.validatorPIN(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: SplashPageView(),
+          );
+        } else if (snapshot.hasData) {
+          bool isTrue = snapshot.data as bool;
+
+          return GetMaterialApp(
+            title: "BERBAKAT",
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(useMaterial3: false),
+            initialRoute: (isTrue) ? Routes.VALIDATOR_PIN : AppPages.INITIAL,
+            getPages: AppPages.routes,
+            localizationsDelegates: [
+              GlobalWidgetsLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              MonthYearPickerLocalizations.delegate,
+            ],
+          );
+        } else {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Container(),
+            ),
+          );
+        }
+      },
     );
   }
 }

@@ -34,7 +34,7 @@ class UbahKataSandiView extends GetView {
               Text(
                 'Password Sekarang',
                 style: blackTextStyle.copyWith(
-                  fontWeight: semiBold,
+                  fontWeight: regular,
                   fontSize: 15,
                 ),
               ),
@@ -55,7 +55,7 @@ class UbahKataSandiView extends GetView {
               Text(
                 'Password Baru',
                 style: blackTextStyle.copyWith(
-                  fontWeight: semiBold,
+                  fontWeight: regular,
                   fontSize: 15,
                 ),
               ),
@@ -88,7 +88,7 @@ class UbahKataSandiView extends GetView {
               Text(
                 'Konfirmasi Password Baru',
                 style: blackTextStyle.copyWith(
-                  fontWeight: semiBold,
+                  fontWeight: regular,
                   fontSize: 15,
                 ),
               ),

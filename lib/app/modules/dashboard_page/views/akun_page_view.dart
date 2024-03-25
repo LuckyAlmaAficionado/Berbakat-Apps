@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/file_saya_view.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_keluarga_view_view.dart';
+import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_kontak_darurat_view.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_payroll_view.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/peringatan_view.dart';
 import 'package:talenta_app/app/modules/akun_services/pengaturan/views/pin_view.dart';
@@ -105,18 +109,30 @@ class AkunPageView extends StatelessWidget {
                   "Info pekerjaan",
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.emergency_outlined),
-                "Info kontak darurat",
+              GestureDetector(
+                onTap: () => Get.to(
+                  InfoKontakDaruratView(),
+                  transition: Transition.fade,
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.emergency_outlined),
+                  "Info kontak darurat",
+                ),
               ),
-              ListTIleInfo(
-                Icon(Icons.groups_outlined),
-                "Info keluarga",
+              GestureDetector(
+                onTap: () => Get.to(
+                  InfoKeluargaViewView(),
+                  transition: Transition.cupertino,
+                ),
+                child: ListTIleInfo(
+                  Icon(Icons.groups_outlined),
+                  "Info keluarga",
+                ),
               ),
-              ListTIleInfo(
-                Icon(Icons.school_outlined),
-                "Pendidikan dan pengalaman",
-              ),
+              // ListTIleInfo(
+              //   Icon(Icons.school_outlined),
+              //   "Pendidikan dan pengalaman",
+              // ),
               GestureDetector(
                 onTap: () => Get.to(InfoPayrollView()),
                 child: ListTIleInfo(
