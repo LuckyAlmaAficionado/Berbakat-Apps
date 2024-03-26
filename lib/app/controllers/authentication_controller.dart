@@ -6,6 +6,7 @@ class AuthenticationController extends GetxController {
   // RxBools untuk status pin dan kebutuhan pin saat membuka aplikasi
   RxBool isPinActivated = false.obs;
   RxBool isNeededPinWhenOpenApps = false.obs;
+  RxBool isAuthenticationOn = false.obs;
 
   // RxString untuk menyimpan pin
   RxString pin = "".obs;
@@ -22,6 +23,7 @@ class AuthenticationController extends GetxController {
     bool? isPinActivatedValue = await prefs.getBool('isPinActivated');
     bool? isNeededPinWhenOpenAppsValue =
         await prefs.getBool('isNeededPinWhenOpenApps');
+    bool? isOauthenticationOnValue = await prefs.getBool("isAuthenticationOn");
     String? pinValue = await prefs.getString('pin');
 
     if (isPinActivatedValue != null &&
@@ -30,11 +32,19 @@ class AuthenticationController extends GetxController {
       isPinActivated(isPinActivatedValue);
       isNeededPinWhenOpenApps(isNeededPinWhenOpenAppsValue);
       pin.value = pinValue;
+      isAuthenticationOn(isOauthenticationOnValue);
       return isNeededPinWhenOpenAppsValue;
     } else {
       initializedValidator();
       return false;
     }
+  }
+
+  // Inisialisasi data authentikasi
+  void initializedValidatorAuthentication() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isAuthenticationOn", !isAuthenticationOn.value);
+    validatorPIN();
   }
 
   // Inisialisasi data default jika tidak ada data di penyimpanan
@@ -43,6 +53,7 @@ class AuthenticationController extends GetxController {
     prefs.setBool('isPinActivated', false);
     prefs.setBool('isNeededPinWhenOpenApps', false);
     prefs.setString('pin', "0");
+    prefs.setBool("isAuthenticationOn", false);
     validatorPIN();
   }
 
@@ -87,4 +98,9 @@ class AuthenticationController extends GetxController {
       Get.toNamed(Routes.DASHBOARD_PAGE);
     }
   }
+
+  // ... Biometrics Authentications
+
+  // ... SignIn
+  login(String email, String password) {}
 }

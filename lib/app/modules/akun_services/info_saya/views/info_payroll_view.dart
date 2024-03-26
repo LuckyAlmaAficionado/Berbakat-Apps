@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/ajukan_perubahan_data_view.dart';
-import 'package:talenta_app/app/routes/app_pages.dart';
 
 import '../../../../shared/theme.dart';
 import '../info_personal_page_view.dart';

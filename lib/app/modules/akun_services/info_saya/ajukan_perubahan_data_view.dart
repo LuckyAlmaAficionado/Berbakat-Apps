@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:talenta_app/app/controllers/camera_data_controller.dart';
 
 import 'package:talenta_app/app/modules/cuti_page/controllers/cuti_page_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
@@ -15,10 +20,10 @@ class AjukanPerubahanDataView extends StatefulWidget {
 
 class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
   final cutiC = Get.put(CutiPageController());
+  String pathFile = "";
 
   String pickDate = "";
   String opsiData = "Pilih data";
-  RxString opsiPerubahanController = "".obs;
   List<String> opsiPerubahanData = [
     "Nama depan",
     "Nama Belakang",
@@ -47,6 +52,12 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
     "Alamat Tempat Tinggal",
     "Status PTKP"
   ];
+
+  @override
+  void dispose() {
+    pathFile = "";
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +109,76 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
                 ),
               ),
             ),
-
-            Divider(
-              thickness: 1,
-              color: darkGreyColor,
-            ),
-            CustomTextfield(
-              hint: "Ubah Menjadi",
-              prefix: Icons.edit_outlined,
+            Column(
+              children: [],
             ),
 
+            (opsiData.contains("Gambar"))
+                ? Column(
+                    children: [
+                      const Gap(10),
+                      Divider(
+                        thickness: 1,
+                        color: darkGreyColor,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.edit_outlined,
+                            color: darkGreyColor,
+                          ),
+                          CircleAvatar(
+                            radius: 30,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
+                                  "https://media-cgk1-2.cdn.whatsapp.net/v/t61.24694-24/297865369_1076922602934423_3062814798227697508_n.jpg?ccb=11-4&oh=01_AdRJwzOKAPikzESrMMzRrOMh8wq5vbpzv8YZuqxqYr7f5w&oe=660F41B3&_nc_sid=e6ed6c&_nc_cat=111"),
+                            ),
+                          ),
+                          Icon(Icons.arrow_forward_ios_outlined),
+                          GestureDetector(
+                            onTap: () async {
+                              await PickImageOption(context);
+                            },
+                            child: Container(
+                              width: 63,
+                              height: 63,
+                              child: (pathFile == "")
+                                  ? CircleAvatar(
+                                      backgroundColor: darkGreyColor,
+                                      child: Icon(
+                                        Icons.upload,
+                                        color: whiteColor,
+                                      ),
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.file(
+                                        File(pathFile),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(),
+                        ],
+                      ),
+                      const Gap(10),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      Divider(
+                        thickness: 1,
+                        color: darkGreyColor,
+                      ),
+                      CustomTextfield(
+                        hint: "Ubah Menjadi",
+                        prefix: Icons.edit_outlined,
+                      ),
+                    ],
+                  ),
             //....
             Divider(
               thickness: 1,
@@ -122,46 +193,53 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
               thickness: 1,
               color: darkGreyColor,
             ),
-            GestureDetector(
-              onTap: () {
-                cutiC.openFileExplorer();
-              },
-              child: Container(
-                width: Get.width,
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.file_copy_outlined,
-                      color: darkGreyColor,
-                    ),
-                    const SizedBox(width: 10),
-                    Obx(
-                      () => SizedBox(
-                        width: Get.width * 0.7,
-                        child: Text(
-                          (cutiC.filePath.isNotEmpty)
-                              ? cutiC.filePath.value.split("/").last
-                              : "Unggah file",
-                          maxLines: 2,
-                          style: blackTextStyle.copyWith(
-                            fontSize: 16,
+            (opsiData.contains("Gambar"))
+                ? SizedBox()
+                : Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          cutiC.openFileExplorer();
+                        },
+                        child: Container(
+                          width: Get.width,
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.file_copy_outlined,
+                                color: darkGreyColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Obx(
+                                () => SizedBox(
+                                  width: Get.width * 0.7,
+                                  child: Text(
+                                    (cutiC.filePath.isNotEmpty)
+                                        ? cutiC.filePath.value.split("/").last
+                                        : "Unggah file",
+                                    maxLines: 2,
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Text(
-              "ukuran maksimal file 10 MB",
-              style: darkGreyTextStyle,
-            ),
-            Divider(
-              thickness: 1,
-              color: darkGreyColor,
-            ),
+                      Text(
+                        "ukuran maksimal file 10 MB",
+                        style: darkGreyTextStyle,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: darkGreyColor,
+                      ),
+                    ],
+                  ),
+
             const SizedBox(height: 50),
             CustomButton(
               title: "Ajukan",
@@ -201,6 +279,104 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> PickImageOption(BuildContext context) {
+    final imageC = Get.put(CameraDataController());
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 190,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                width: 50,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: darkGreyColor,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              const Gap(40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      XFile? file = await imageC.pickImage(ImageSource.camera);
+                      setState(() {
+                        pathFile = file.path;
+                      });
+                      Get.back();
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: darkGreyColor,
+                          ),
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: whiteColor,
+                            size: 30,
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          "Kamera",
+                          style: blackTextStyle.copyWith(
+                            fontWeight: regular,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      XFile? file = await imageC.pickImage(ImageSource.gallery);
+                      setState(() {
+                        pathFile = file.path;
+                      });
+                      Get.back();
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: darkGreyColor,
+                          ),
+                          child: Icon(
+                            Icons.image,
+                            color: whiteColor,
+                            size: 30,
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          "Galeri",
+                          style: blackTextStyle.copyWith(
+                            fontWeight: regular,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

@@ -21,7 +21,6 @@ class _RiwayatPageViewState extends State<RiwayatPageView> {
   @override
   Widget build(BuildContext context) {
     // ... hitung tanggal berakhir
-
     Get.find<DaftarAbsensiPageController>().setNewDate();
 
     // ... hitung panjang rentang tanggal

@@ -115,6 +115,7 @@ class SliderPageView extends GetView<SliderPageController> {
                                       if (controller.slider.length - 1 ==
                                           controller.indexSlider.value) {
                                         // .. jika sesuai maka akan dilanjutkan ke halaman login
+                                        controller.setCarouselOpened();
                                         Get.offNamed(Routes.SIGN_IN_PAGE);
                                       } else {
                                         // ... jika belum akan melanjutkan ke slider berikutnya

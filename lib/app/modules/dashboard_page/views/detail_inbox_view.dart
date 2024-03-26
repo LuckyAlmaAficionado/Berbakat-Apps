@@ -55,7 +55,7 @@ class DetailInboxView extends GetView {
                   IconButton(
                     onPressed: () {
                       showModalBottomSheet(
-                        showDragHandle: true,
+                        isScrollControlled: true,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
@@ -64,7 +64,8 @@ class DetailInboxView extends GetView {
                         ),
                         context: context,
                         builder: (context) {
-                          return Padding(
+                          return Container(
+                            height: 230,
                             padding: const EdgeInsets.all(10.0),
                             child: Column(
                               children: [

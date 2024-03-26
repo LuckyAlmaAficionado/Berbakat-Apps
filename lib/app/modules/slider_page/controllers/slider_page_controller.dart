@@ -1,12 +1,28 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SliderPageController extends GetxController {
   CarouselController carouselController = CarouselController();
 
   RxInt indexSlider = 0.obs;
   RxBool isClicked = false.obs;
+  RxBool isCarouselOpened = false.obs;
+
+  Future<void> checkCarouselStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isOpened = prefs.getBool('isCarouselOpened');
+    if (isOpened != null) {
+      isCarouselOpened.value = isOpened;
+    }
+  }
+
+  void setCarouselOpened() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isCarouselOpened', true);
+    isCarouselOpened.value = true;
+  }
 
   var text = [
     {

@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/file_saya_view.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_keluarga_view_view.dart';
 import 'package:talenta_app/app/modules/akun_services/info_saya/views/info_kontak_darurat_view.dart';
@@ -18,8 +17,15 @@ import 'package:talenta_app/app/shared/utils.dart';
 import '../../akun_services/info_saya/info_pekerjaan_view.dart';
 import '../../akun_services/info_saya/info_personal_page_view.dart';
 
-class AkunPageView extends StatelessWidget {
+class AkunPageView extends StatefulWidget {
   const AkunPageView({super.key});
+
+  @override
+  State<AkunPageView> createState() => _AkunPageViewState();
+}
+
+class _AkunPageViewState extends State<AkunPageView> {
+  var authC = Get.find<AuthenticationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +64,19 @@ class AkunPageView extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 30,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.network(
+                      loadingBuilder: (context, child, loadingProgress) =>
+                          (loadingProgress == null)
+                              ? child
+                              : Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                      "https://media-cgk1-2.cdn.whatsapp.net/v/t61.24694-24/297865369_1076922602934423_3062814798227697508_n.jpg?ccb=11-4&oh=01_AdRJwzOKAPikzESrMMzRrOMh8wq5vbpzv8YZuqxqYr7f5w&oe=660F41B3&_nc_sid=e6ed6c&_nc_cat=111",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -140,10 +159,6 @@ class AkunPageView extends StatelessWidget {
                   "Info payroll",
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.info_outline),
-                "Info tambahan",
-              ),
               GestureDetector(
                 onTap: () => Get.to(FileSayaView()),
                 child: ListTIleInfo(
@@ -210,17 +225,27 @@ class AkunPageView extends StatelessWidget {
                   "PIN",
                 ),
               ),
-              ListTIleInfo(
-                Icon(Icons.tag_faces_sharp),
-                "Aktifkan otentikasi",
-              ),
-              ListTIleInfo(
-                Icon(Icons.access_time),
-                "Pengingat clock in/out",
-              ),
-              ListTIleInfo(
-                Icon(Icons.language),
-                "Bahasa",
+              Obx(
+                () => (authC.isNeededPinWhenOpenApps.value)
+                    ? ListTile(
+                        leading: Icon(Icons.face),
+                        title: Text(
+                          "Aktifkan otentikasi",
+                          style: GoogleFonts.outfit(
+                            fontWeight: light,
+                          ),
+                        ),
+                        trailing: Switch(
+                          activeColor: darkBlueColor,
+                          value: authC.isAuthenticationOn.value,
+                          onChanged: (value) {
+                            setState(() {
+                              authC.initializedValidatorAuthentication();
+                            });
+                          },
+                        ),
+                      )
+                    : SizedBox(),
               ),
             ],
           ),

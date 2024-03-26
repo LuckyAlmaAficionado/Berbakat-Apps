@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
@@ -100,7 +101,7 @@ class DashboardPageController extends GetxController {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.REIMBURSEMENT_PAGE),
                     child: Container(
                       color: Colors.transparent,
                       child: Row(

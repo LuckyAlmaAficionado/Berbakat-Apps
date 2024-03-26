@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 import '../controllers/sign_in_page_controller.dart';
@@ -13,7 +12,7 @@ class SignInPageView extends GetView<SignInPageController> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: ListView(
             shrinkWrap: true,
             children: [
@@ -45,6 +44,7 @@ class SignInPageView extends GetView<SignInPageController> {
                 width: Get.width,
                 height: 40,
                 child: TextField(
+                  controller: controller.emailC,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     border: OutlineInputBorder(
@@ -66,6 +66,7 @@ class SignInPageView extends GetView<SignInPageController> {
                 width: Get.width,
                 height: 40,
                 child: Obx(() => TextField(
+                      controller: controller.passwordC,
                       obscureText: controller.isObsecure.value,
                       decoration: InputDecoration(
                         contentPadding:
@@ -98,7 +99,7 @@ class SignInPageView extends GetView<SignInPageController> {
                     ),
                     backgroundColor: darkBlueColor,
                   ),
-                  onPressed: () => Get.toNamed(Routes.DASHBOARD_PAGE),
+                  onPressed: () => controller.login(),
                   child: Text(
                     "Sign in",
                     style: whiteTextStyle.copyWith(),

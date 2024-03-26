@@ -7,10 +7,12 @@ class CameraPageController extends GetxController {
   final cameraController = Get.find<CameraDataController>();
   late CameraController cameraC;
   late Future<void> initializeControllerFuture;
+  RxString status = "".obs;
 
   @override
   void onInit() {
     super.onInit();
+    status.value = Get.arguments;
     cameraC = CameraController(cameraController.camera, ResolutionPreset.max);
     initializeControllerFuture = cameraC.initialize();
     print(cameraController.toString());

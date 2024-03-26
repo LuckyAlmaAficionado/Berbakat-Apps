@@ -3,7 +3,8 @@ import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:talenta_app/app/controllers/file_picker_controller.dart';
+import 'package:talenta_app/app/controllers/date_controller.dart';
+import 'package:talenta_app/app/modules/daftar_absensi_page/controllers/daftar_absensi_page_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 import 'package:talenta_app/app/shared/utils.dart';
 
@@ -15,10 +16,14 @@ class PengajuanAbsensiView extends StatefulWidget {
 }
 
 class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
-  TextEditingController timeController = TextEditingController();
   bool clockIn = false;
   bool clockOut = false;
   String path = "";
+
+  TextEditingController timeController = TextEditingController();
+
+  final controller = Get.put(DaftarAbsensiPageController());
+  final dateController = Get.put(DateController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +49,12 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
                   // ... pilih tanggal
                   TextFormField(
                     controller: timeController,
-                    onTap: () {
+                    onTap: () async {
                       FocusScope.of(context).requestFocus(new FocusNode());
-                      _selectDate(context);
+                      DateTime? picked =
+                          await dateController.selectDate(context);
+                      timeController.text = DateFormat("dd MMM yyyy", "id_ID")
+                          .format(picked); // Ubah format sesuai kebutuhan Anda;
                     },
                     decoration: InputDecoration(
                       labelText: 'Pick a date',
@@ -178,19 +186,9 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
                         )),
                   ),
                   const Gap(10),
-
                   GestureDetector(
                     onTap: () async {
-                      print("mengambil file");
-                      path = await Get.put(FilePickerController())
-                          .openFileExplorer();
-                      if (path.isEmpty) {
-                        print('tidak ada file yang di pick');
-                      } else {
-                        setState(() {
-                          print(path);
-                        });
-                      }
+                      await controller.pengajuanDataAbsensi();
                     },
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(0),
@@ -226,20 +224,5 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
             ),
           ],
         ));
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        timeController.text = DateFormat("dd MMM yyyy", "id_ID")
-            .format(picked); // Ubah format sesuai kebutuhan Anda
-      });
-    }
   }
 }

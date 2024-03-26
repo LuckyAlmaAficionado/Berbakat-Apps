@@ -30,16 +30,17 @@ class ClockInPageController extends GetxController {
     position = await locationC.getCurrentLocation();
     latitude.value = position.latitude;
     longitude.value = position.longitude;
-
-    print(latitude.value);
-    print(longitude.value);
     await isWithinRange();
   }
 
   isWithinRange() {
-    print("masuk sini");
     bool result = locationC.isWithinRange(
-        latitude.value, longitude.value, -7.774941, 110.395369, 100);
+      latitude.value,
+      longitude.value,
+      -7.774941,
+      110.395369,
+      50,
+    );
 
     (result)
         ? dev.log("dalam jangkauan")

@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:talenta_app/app/modules/akun_services/pengaturan/views/set_new_pin.dart';
 
 import 'package:talenta_app/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
-import 'package:talenta_app/app/modules/validator_pin/views/validator_pin_view.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
 import '../../../shared/theme.dart';
@@ -82,12 +78,11 @@ class _HomePageViewState extends State<HomePageView> {
                     Row(
                       children: [
                         Icon(
-                          Icons.timelapse_outlined,
+                          Icons.date_range_outlined,
                           color: whiteColor,
                         ),
-                        const SizedBox(width: 5),
                         Text(
-                          "${DateFormat("dd MMMM yyyy (08:00 - 16:45)", "id_ID").format(DateTime.now())}",
+                          " ${DateFormat("dd MMMM yyyy (08:00 - 16:45)", "id_ID").format(DateTime.now())}",
                           style: whiteTextStyle.copyWith(
                             fontWeight: semiBold,
                             fontSize: 15,
@@ -116,7 +111,7 @@ class _HomePageViewState extends State<HomePageView> {
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.CLOCK_IN_PAGE,
-                                    arguments: "clock-in",
+                                    arguments: "Absen Masuk",
                                   );
                                 },
                                 child: Container(
@@ -131,7 +126,7 @@ class _HomePageViewState extends State<HomePageView> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        'Clock In',
+                                        'Absen Masuk',
                                         style: blackTextStyle.copyWith(
                                           fontWeight: semiBold,
                                           fontSize: 15,
@@ -153,7 +148,7 @@ class _HomePageViewState extends State<HomePageView> {
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.CLOCK_IN_PAGE,
-                                    arguments: "clock-out",
+                                    arguments: "Absen Keluar",
                                   );
                                 },
                                 child: Container(
@@ -168,7 +163,7 @@ class _HomePageViewState extends State<HomePageView> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        'Clock Out',
+                                        'Absen Keluar',
                                         style: blackTextStyle.copyWith(
                                           fontWeight: semiBold,
                                           fontSize: 15,
@@ -205,7 +200,7 @@ class _HomePageViewState extends State<HomePageView> {
                         onTap: () => Get.toNamed(Routes.DAFTAR_ABSENSI_PAGE),
                         child: IconWidgetService(
                           Icons.calendar_month,
-                          "Daftar Absensi",
+                          "Daftar Absen",
                           HexColor("FA7113"),
                         ),
                       ),
@@ -225,7 +220,7 @@ class _HomePageViewState extends State<HomePageView> {
                       GestureDetector(
                         onTap: () => Get.toNamed(Routes.TELAT_MASUK_PAGE),
                         child: IconWidgetService(
-                          Icons.access_time,
+                          Icons.more_time_rounded,
                           "Telat Masuk",
                           HexColor("18B8A6"),
                         ),
@@ -238,7 +233,7 @@ class _HomePageViewState extends State<HomePageView> {
                       GestureDetector(
                         onTap: () => Get.toNamed(Routes.CUTI_PAGE),
                         child: IconWidgetService(
-                          Icons.access_time_filled_sharp,
+                          Icons.leave_bags_at_home_outlined,
                           "Cuti",
                           HexColor("3883F7"),
                         ),
@@ -267,7 +262,7 @@ class _HomePageViewState extends State<HomePageView> {
                       ),
                       GestureDetector(
                         child: IconWidgetService(
-                          Icons.present_to_all_rounded,
+                          Icons.work_history_outlined,
                           "Izin Kembali",
                           HexColor("FA7113"),
                         ),

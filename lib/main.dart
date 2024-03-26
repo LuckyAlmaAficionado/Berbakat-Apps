@@ -11,6 +11,7 @@ import 'package:month_year_picker/month_year_picker.dart';
 
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/controllers/camera_data_controller.dart';
+import 'package:talenta_app/app/modules/slider_page/controllers/slider_page_controller.dart';
 import 'package:talenta_app/app/shared/splash.dart';
 
 import 'app/routes/app_pages.dart';
@@ -51,18 +52,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: "BERBAKAT",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: false),
-      initialRoute: Routes.DASHBOARD_PAGE,
-      getPages: AppPages.routes,
-      localizationsDelegates: [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        MonthYearPickerLocalizations.delegate,
-      ],
-    );
+    Get.put(SliderPageController()).checkCarouselStatus();
+
+    // return GetMaterialApp(
+    //   title: "BERBAKAT",
+    //   debugShowCheckedModeBanner: false,
+    //   theme: ThemeData(useMaterial3: false),
+    //   initialRoute: Routes.SIGN_IN_PAGE,
+    //   getPages: AppPages.routes,
+    //   localizationsDelegates: [
+    //     GlobalWidgetsLocalizations.delegate,
+    //     GlobalMaterialLocalizations.delegate,
+    //     MonthYearPickerLocalizations.delegate,
+    //   ],
+    // );
 
     return FutureBuilder(
       future: authC.validatorPIN(),
@@ -79,7 +82,12 @@ class MyApp extends StatelessWidget {
             title: "BERBAKAT",
             debugShowCheckedModeBanner: false,
             theme: ThemeData(useMaterial3: false),
-            initialRoute: (isTrue) ? Routes.VALIDATOR_PIN : AppPages.INITIAL,
+            initialRoute: (isTrue)
+                ? Routes.VALIDATOR_PIN
+                // ... apakah slider sudah pernah terbuka
+                : (Get.find<SliderPageController>().isCarouselOpened.value)
+                    ? Routes.SIGN_IN_PAGE
+                    : Routes.SLIDER_PAGE,
             getPages: AppPages.routes,
             localizationsDelegates: [
               GlobalWidgetsLocalizations.delegate,

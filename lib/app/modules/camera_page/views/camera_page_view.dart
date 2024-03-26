@@ -10,7 +10,6 @@ import '../../../shared/theme.dart';
 import '../controllers/camera_page_controller.dart';
 
 class CameraPageView extends GetView<CameraPageController> {
-  const CameraPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +17,13 @@ class CameraPageView extends GetView<CameraPageController> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Clock In',
-              style: whiteTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: semiBold,
+            Obx(
+              () => Text(
+                controller.status.value,
+                style: whiteTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
               ),
             ),
             Text(
@@ -49,7 +50,7 @@ class CameraPageView extends GetView<CameraPageController> {
           preferredSize: Size.fromHeight(120),
           child: Container(
             width: Get.width,
-            height: Get.height * 0.1,
+            height: 80,
             padding: const EdgeInsets.all(15),
             margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -148,7 +149,7 @@ class CameraPageView extends GetView<CameraPageController> {
                     const SizedBox(height: 10),
                     CustomButton(
                       title: "Kirim",
-                      onTap: () {},
+                      onTap: () => controller.takePicture(),
                     ),
                   ],
                 )),

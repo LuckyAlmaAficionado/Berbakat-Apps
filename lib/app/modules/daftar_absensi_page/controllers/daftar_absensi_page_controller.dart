@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:talenta_app/app/controllers/file_picker_controller.dart';
 
 class DaftarAbsensiPageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -10,11 +11,14 @@ class DaftarAbsensiPageController extends GetxController
   RxInt noClockIn = 0.obs;
   RxInt NoClockOut = 0.obs;
   RxInt EarlyClockOut = 0.obs;
+  RxString path = "".obs;
+
+  final filePickerC = Get.put(FilePickerController());
 
   @override
   void onInit() {
     controller = TabController(length: 3, vsync: this);
-    setNewDate();
+    // setNewDate();
     super.onInit();
   }
 
@@ -30,8 +34,9 @@ class DaftarAbsensiPageController extends GetxController
     startDate = DateTime(selectedDate.year, selectedDate.month - 1, 26);
 
     // Tentukan tanggal berakhir (25 bulan ini)
+    print(selectedDate.day);
     if (selectedDate.day >= 26) {
-      endDate = DateTime(selectedDate.year, selectedDate.month + 1, 26);
+      endDate = DateTime(selectedDate.year, selectedDate.month, 26);
     } else {
       endDate = DateTime(selectedDate.year, selectedDate.month, 26);
     }
@@ -55,5 +60,18 @@ class DaftarAbsensiPageController extends GetxController
     absent.value = dateLength - hariLibur;
 
     return dateLength;
+  }
+
+  Future<void> pengajuanDataAbsensi() async {
+    path.value = await filePickerC.openFileExplorerPDF();
+
+    if (path.value.isNotEmpty) {
+      // ... jika ada file yang di ambil
+      print(path.value);
+      return;
+    }
+
+    // ... jika tidak ada file yang di ambil
+    return;
   }
 }

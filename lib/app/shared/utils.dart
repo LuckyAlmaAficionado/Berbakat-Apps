@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
@@ -170,8 +171,12 @@ class Utils {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {
-                      Get.offAllNamed(Routes.SIGN_IN_PAGE);
+                    onPressed: () async {
+                      await Get.find<AuthenticationController>()
+                          .resetPin()
+                          .then(
+                            (value) => Get.offAllNamed(Routes.SIGN_IN_PAGE),
+                          );
                     },
                     child: Text(
                       "Keluar",

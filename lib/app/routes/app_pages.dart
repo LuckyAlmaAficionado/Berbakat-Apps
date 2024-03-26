@@ -15,6 +15,8 @@ import '../modules/dashboard_page/bindings/dashboard_page_binding.dart';
 import '../modules/dashboard_page/views/dashboard_page_view.dart';
 import '../modules/persetujuan_page/bindings/persetujuan_page_binding.dart';
 import '../modules/persetujuan_page/views/persetujuan_page_view.dart';
+import '../modules/reimbursement_page/bindings/reimbursement_page_binding.dart';
+import '../modules/reimbursement_page/views/reimbursement_page_view.dart';
 import '../modules/sign_in_page/bindings/sign_in_page_binding.dart';
 import '../modules/sign_in_page/views/sign_in_page_view.dart';
 import '../modules/slider_page/bindings/slider_page_binding.dart';
@@ -66,12 +68,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CLOCK_IN_PAGE,
-      page: () => const ClockInPageView(),
+      page: () => ClockInPageView(),
       binding: ClockInPageBinding(),
     ),
     GetPage(
       name: _Paths.CAMERA_PAGE,
-      page: () => const CameraPageView(),
+      page: () => CameraPageView(),
       binding: CameraPageBinding(),
     ),
     GetPage(
@@ -108,6 +110,11 @@ class AppPages {
       name: _Paths.TELAT_MASUK_PAGE,
       page: () => const TelatMasukPageView(),
       binding: TelatMasukPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.REIMBURSEMENT_PAGE,
+      page: () => const ReimbursementPageView(),
+      binding: ReimbursementPageBinding(),
     ),
   ];
 }

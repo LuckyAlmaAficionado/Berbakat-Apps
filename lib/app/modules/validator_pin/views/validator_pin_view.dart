@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../shared/theme.dart';
 import '../controllers/validator_pin_controller.dart';
 
+// ignore: must_be_immutable
 class ValidatorPinView extends GetView<ValidatorPinController> {
   ValidatorPinView({Key? key}) : super(key: key);
 

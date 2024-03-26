@@ -324,7 +324,13 @@ class NotificationTabBar extends StatelessWidget {
                 fontWeight: regular,
               ),
             ),
-            subtitle: Text("Your requested change data has been accepted"),
+            subtitle: Text(
+              "Your requested change data has been accepted",
+              style: darkGreyTextStyle.copyWith(
+                fontWeight: extraLight,
+                fontSize: 12,
+              ),
+            ),
           );
         })
       ],

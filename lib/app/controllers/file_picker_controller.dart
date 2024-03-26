@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class FilePickerController extends GetxController {
   RxString? filePath;
 
-  Future<void> openFilePicker() async {
+  Future<void> openFileExplorer() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -21,7 +21,7 @@ class FilePickerController extends GetxController {
     }
   }
 
-  Future<String> openFileExplorer() async {
+  Future<String> openFileExplorerPDF() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
