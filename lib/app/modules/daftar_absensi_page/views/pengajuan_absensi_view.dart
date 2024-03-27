@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:talenta_app/app/controllers/date_controller.dart';
+import 'package:talenta_app/app/controllers/file_picker_controller.dart';
 import 'package:talenta_app/app/modules/daftar_absensi_page/controllers/daftar_absensi_page_controller.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 import 'package:talenta_app/app/shared/utils.dart';
@@ -24,6 +25,7 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
 
   final controller = Get.put(DaftarAbsensiPageController());
   final dateController = Get.put(DateController());
+  final filePicker = Get.put(FilePickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Pick a date',
+                      labelStyle: darkGreyTextStyle,
                       suffixIcon: Icon(Icons.calendar_today),
                       border: OutlineInputBorder(),
                     ),
@@ -188,7 +191,8 @@ class _PengajuanAbsensiViewState extends State<PengajuanAbsensiView> {
                   const Gap(10),
                   GestureDetector(
                     onTap: () async {
-                      await controller.pengajuanDataAbsensi();
+                      path = await filePicker.openFileExplorerPDF();
+                      setState(() {});
                     },
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(0),

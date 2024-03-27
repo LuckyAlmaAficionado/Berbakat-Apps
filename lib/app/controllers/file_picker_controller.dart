@@ -24,7 +24,7 @@ class FilePickerController extends GetxController {
   Future<String> openFileExplorerPDF() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: ['pdf', 'jpg'],
     );
 
     if (result != null) {

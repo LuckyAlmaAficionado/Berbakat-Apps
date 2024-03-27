@@ -1,6 +1,6 @@
-import 'package:geolocator/geolocator.dart';
 import 'dart:math' show sin, cos, sqrt, atan2;
 
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class LocationController extends GetxController {

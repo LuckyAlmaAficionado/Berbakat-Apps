@@ -35,11 +35,12 @@ class CutiPageController extends GetxController
   void openFileExplorer() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: ['pdf', "jpg"],
     );
 
     if (result != null) {
       filePath.value = result.files.single.path!;
+      print(filePath.value);
     }
   }
 }

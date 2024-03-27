@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:talenta_app/app/routes/app_pages.dart';
 
 class AuthenticationController extends GetxController {

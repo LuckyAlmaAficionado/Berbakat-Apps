@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:talenta_app/app/routes/app_pages.dart';
 
+import 'package:talenta_app/app/routes/app_pages.dart';
 import 'package:talenta_app/app/shared/theme.dart';
 
 import '../controllers/absen_page_controller.dart';
+
 import 'detail_clock_in_view.dart';
 
 class AbsenPageView extends GetView<AbsenPageController> {

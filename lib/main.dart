@@ -18,6 +18,8 @@ import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ... setting camera dan juga setting agar kamera yang digunakan adalah kamera belakang
   final camera = await availableCameras();
   final firstCamera = camera.firstWhere(
       (element) => element.lensDirection == CameraLensDirection.front);
@@ -29,13 +31,16 @@ Future<void> main() async {
   // ...
 
   if (Platform.isAndroid) {
+    // ... mengatur warna notification bar agar transparan
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
   }
-  await initializeDateFormatting("id_ID", null);
-  final authC = await Get.put(AuthenticationController(), permanent: true);
+  await initializeDateFormatting(
+      "id_ID", null); // Inisialisasi tanggal bahasa indonesia
 
+  // Inisialisasi authtentikasi
+  final authC = await Get.put(AuthenticationController(), permanent: true);
   await authC.validatorPIN().then(
         (value) => runApp(
           MyApp(

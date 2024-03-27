@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import 'package:talenta_app/app/shared/theme.dart';
 
 class InfoKeluargaViewView extends GetView {
