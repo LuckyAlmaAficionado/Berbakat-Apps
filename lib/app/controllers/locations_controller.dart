@@ -32,7 +32,8 @@ class LocationController extends GetxController {
     await askingPermissions();
     // ... mendapatkan value dari location
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      desiredAccuracy: LocationAccuracy.high,
+    );
 
     // ... mengembalikan position
     return position;
