@@ -23,7 +23,7 @@ class ValidatorPinView extends GetView<ValidatorPinController> {
             () => (controller.isAvailable.value)
                 ? IconButton(
                     onPressed: () async {
-                      await controller.isLocalAuthenticationAvailable();
+                      await controller.isLocalAuthenticationAvailable(argument);
                     },
                     icon: Icon(Icons.fingerprint))
                 : SizedBox(),

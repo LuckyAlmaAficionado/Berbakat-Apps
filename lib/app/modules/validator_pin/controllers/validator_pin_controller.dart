@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/state_manager.dart';
 import 'dart:developer' as dev;
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
@@ -29,10 +26,11 @@ class ValidatorPinController extends GetxController {
     pin.value = authC.pin.value;
 
     // .... melakukan pengecekan jika menggunakan authentication
-    if (authC.isAuthenticationOn.value) checkLocalAuthentication();
+    if (authC.isAuthenticationOn.value)
+      checkLocalAuthentication(Get.arguments ?? "signin");
   }
 
-  checkLocalAuthentication() async {
+  checkLocalAuthentication(String status) async {
     isAvailable(await localAuthentication.canCheckBiometrics);
     if (isAvailable.value) {
       List<BiometricType> types =
@@ -43,10 +41,10 @@ class ValidatorPinController extends GetxController {
       }
     }
 
-    await isLocalAuthenticationAvailable();
+    await isLocalAuthenticationAvailable(status);
   }
 
-  isLocalAuthenticationAvailable() async {
+  isLocalAuthenticationAvailable(String status) async {
     // ... mendapatkan data apakah user ter-autentikasi
     isAuthenticated.value = await localAuthentication.authenticate(
         localizedReason: "Please Authenticate",
@@ -56,8 +54,11 @@ class ValidatorPinController extends GetxController {
         ));
 
     // ... jika benar maka
-    if (isAuthenticated.value) {
+    if (isAuthenticated.value && status.contains("signin")) {
       Get.offAllNamed(Routes.DASHBOARD_PAGE);
+      return;
+    } else if (isAuthenticated.value && status.contains("slip-gaji")) {
+      Get.toNamed(Routes.SLIP_GAJI_PAGE);
       return;
     }
   }
