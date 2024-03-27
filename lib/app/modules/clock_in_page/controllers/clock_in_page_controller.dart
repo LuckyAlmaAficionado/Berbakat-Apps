@@ -28,6 +28,7 @@ class ClockInPageController extends GetxController {
   initializedLocation() async {
     Position position;
     position = await locationC.getCurrentLocation();
+    print('tunggu disini');
     latitude.value = position.latitude;
     longitude.value = position.longitude;
     await isWithinRange();

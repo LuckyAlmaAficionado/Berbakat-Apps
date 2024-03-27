@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:talenta_app/app/shared/utils.dart';
 
 import '../../../../shared/theme.dart';
 
+// ignore: must_be_immutable
 class UbahKataSandiView extends GetView {
-  const UbahKataSandiView({Key? key}) : super(key: key);
+  UbahKataSandiView({Key? key}) : super(key: key);
+
+  RxBool isPassShowing = true.obs;
+  RxBool isConfPassShowing = true.obs;
+
+  TextEditingController currentPasswordC = TextEditingController();
+  TextEditingController newPasswordC = TextEditingController();
+  TextEditingController newConfPasswordC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +53,7 @@ class UbahKataSandiView extends GetView {
                 width: Get.width,
                 height: 40,
                 child: TextField(
+                  controller: currentPasswordC,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     border: OutlineInputBorder(
@@ -63,22 +74,28 @@ class UbahKataSandiView extends GetView {
               SizedBox(
                 width: Get.width,
                 height: 40,
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: darkGreyColor,
+                child: Obx(
+                  () => TextField(
+                    controller: newPasswordC,
+                    obscureText: isPassShowing.value,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 15),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          isPassShowing.toggle();
+                        },
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: darkGreyColor,
+                        ),
                       ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(
-                        color: lightGreyColor,
-                        width: 1,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: lightGreyColor,
+                          width: 1,
+                        ),
                       ),
                     ),
                   ),
@@ -96,22 +113,28 @@ class UbahKataSandiView extends GetView {
               SizedBox(
                 width: Get.width,
                 height: 40,
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: darkGreyColor,
+                child: Obx(
+                  () => TextField(
+                    controller: newConfPasswordC,
+                    obscureText: isConfPassShowing.value,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 15),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          isConfPassShowing.toggle();
+                        },
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: darkGreyColor,
+                        ),
                       ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(
-                        color: lightGreyColor,
-                        width: 1,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: lightGreyColor,
+                          width: 1,
+                        ),
                       ),
                     ),
                   ),
@@ -128,7 +151,13 @@ class UbahKataSandiView extends GetView {
                     ),
                     backgroundColor: darkBlueColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    validatorTextfield(
+                      currentPasswordC.text,
+                      newPasswordC.text,
+                      newConfPasswordC.text,
+                    );
+                  },
                   child: Text(
                     "Simpan perubahan",
                     style: whiteTextStyle.copyWith(),
@@ -140,5 +169,32 @@ class UbahKataSandiView extends GetView {
         ),
       ),
     );
+  }
+
+  validatorTextfield(
+    String curPassword,
+    String newPassword,
+    String newConfPassword,
+  ) {
+    if (curPassword.isEmpty) {
+      Utils().snackbarC("Oh Tidak...!", "Isi semua kolom!", false);
+      return false;
+    } else if (newPassword.isEmpty) {
+      Utils().snackbarC("Oh Tidak...!", "Isi semua kolom!", false);
+      return false;
+    } else if (newConfPassword.isEmpty) {
+      Utils().snackbarC("Oh Tidak...!", "Isi semua kolom!", false);
+      return false;
+    } else if (!newPassword.contains(newConfPassword)) {
+      Utils().snackbarC(
+        "Oh Tidak...!",
+        "Password baru dan confirm password tidak sama!",
+        false,
+      );
+      return false;
+    } else {
+      Utils().snackbarC("Berhasil..!", "data berhasil", true);
+      return true;
+    }
   }
 }

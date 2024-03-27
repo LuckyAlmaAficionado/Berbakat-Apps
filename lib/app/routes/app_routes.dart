@@ -19,6 +19,7 @@ abstract class Routes {
   static const PERSETUJUAN_PAGE = _Paths.PERSETUJUAN_PAGE;
   static const TELAT_MASUK_PAGE = _Paths.TELAT_MASUK_PAGE;
   static const REIMBURSEMENT_PAGE = _Paths.REIMBURSEMENT_PAGE;
+  static const ANGGOTA_TIM = _Paths.ANGGOTA_TIM;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const PERSETUJUAN_PAGE = '/persetujuan-page';
   static const TELAT_MASUK_PAGE = '/telat-masuk-page';
   static const REIMBURSEMENT_PAGE = '/reimbursement-page';
+  static const ANGGOTA_TIM = '/anggota-tim';
 }

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/state_manager.dart';
 import 'dart:developer' as dev;
 import 'package:talenta_app/app/controllers/authentication_controller.dart';
 import 'package:talenta_app/app/routes/app_pages.dart';
 
+import 'package:local_auth/local_auth.dart';
 import '../../../shared/utils.dart';
 
 class ValidatorPinController extends GetxController {
   /// ... controller
   TextEditingController validatorC = TextEditingController();
   final authC = Get.find<AuthenticationController>();
+  LocalAuthentication localAuthentication = LocalAuthentication();
+  RxBool isAvailable = false.obs;
+  RxBool isAuthenticated = false.obs;
+  RxString text = ''.obs;
 
   /// ... deklarasi RxString
   RxString enteredPin = "".obs;
@@ -18,8 +26,40 @@ class ValidatorPinController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print(authC.pin.value);
     pin.value = authC.pin.value;
+
+    // .... melakukan pengecekan jika menggunakan authentication
+    if (authC.isAuthenticationOn.value) checkLocalAuthentication();
+  }
+
+  checkLocalAuthentication() async {
+    isAvailable(await localAuthentication.canCheckBiometrics);
+    if (isAvailable.value) {
+      List<BiometricType> types =
+          await localAuthentication.getAvailableBiometrics();
+      text("Biometric Available");
+      for (var item in types) {
+        text.value += "\n- $item";
+      }
+    }
+
+    await isLocalAuthenticationAvailable();
+  }
+
+  isLocalAuthenticationAvailable() async {
+    // ... mendapatkan data apakah user ter-autentikasi
+    isAuthenticated.value = await localAuthentication.authenticate(
+        localizedReason: "Please Authenticate",
+        options: AuthenticationOptions(
+          stickyAuth: true,
+          useErrorDialogs: true,
+        ));
+
+    // ... jika benar maka
+    if (isAuthenticated.value) {
+      Get.offAllNamed(Routes.DASHBOARD_PAGE);
+      return;
+    }
   }
 
   void checkPin(String validator) {

@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
     //   title: "BERBAKAT",
     //   debugShowCheckedModeBanner: false,
     //   theme: ThemeData(useMaterial3: false),
-    //   initialRoute: Routes.SIGN_IN_PAGE,
+    //   initialRoute: Routes.ANGGOTA_TIM,
     //   getPages: AppPages.routes,
     //   localizationsDelegates: [
     //     GlobalWidgetsLocalizations.delegate,

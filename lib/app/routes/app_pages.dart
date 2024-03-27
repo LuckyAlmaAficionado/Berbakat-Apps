@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/absen_page/bindings/absen_page_binding.dart';
 import '../modules/absen_page/views/absen_page_view.dart';
+import '../modules/anggota_tim/bindings/anggota_tim_binding.dart';
+import '../modules/anggota_tim/views/anggota_tim_view.dart';
 import '../modules/camera_page/bindings/camera_page_binding.dart';
 import '../modules/camera_page/views/camera_page_view.dart';
 import '../modules/clock_in_page/bindings/clock_in_page_binding.dart';
@@ -115,6 +117,11 @@ class AppPages {
       name: _Paths.REIMBURSEMENT_PAGE,
       page: () => const ReimbursementPageView(),
       binding: ReimbursementPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.ANGGOTA_TIM,
+      page: () => const AnggotaTimView(),
+      binding: AnggotaTimBinding(),
     ),
   ];
 }

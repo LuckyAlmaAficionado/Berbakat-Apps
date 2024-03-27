@@ -16,6 +16,20 @@ class ValidatorPinView extends GetView<ValidatorPinController> {
     print(argument);
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: darkBlueColor,
+        actions: [
+          Obx(
+            () => (controller.isAvailable.value)
+                ? IconButton(
+                    onPressed: () async {
+                      await controller.isLocalAuthenticationAvailable();
+                    },
+                    icon: Icon(Icons.fingerprint))
+                : SizedBox(),
+          )
+        ],
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

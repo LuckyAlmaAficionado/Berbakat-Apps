@@ -351,13 +351,16 @@ class _HomePageViewState extends State<HomePageView> {
                         ),
                       ),
                       new Spacer(),
-                      Text(
-                        "Lihat Semua",
-                        style: lightBlueTextStyle.copyWith(
-                          fontWeight: regular,
-                          fontSize: 14,
+                      TextButton(
+                        onPressed: () => Get.toNamed(Routes.ANGGOTA_TIM),
+                        child: Text(
+                          "Lihat Semua",
+                          style: lightBlueTextStyle.copyWith(
+                            fontWeight: regular,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],
