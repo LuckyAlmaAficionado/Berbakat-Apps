@@ -11,10 +11,7 @@ class FileSayaView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'File saya',
-          style: appBarTextStyle,
-        ),
+        title: Text('File saya', style: appBarTextStyle),
         backgroundColor: darkBlueColor,
         centerTitle: true,
       ),

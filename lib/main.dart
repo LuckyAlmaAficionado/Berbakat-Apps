@@ -36,8 +36,9 @@ Future<void> main() async {
       statusBarColor: Colors.transparent,
     ));
   }
-  await initializeDateFormatting(
-      "id_ID", null); // Inisialisasi tanggal bahasa indonesia
+
+  // Inisialisasi tanggal bahasa indonesia
+  await initializeDateFormatting("id_ID", null);
 
   // Inisialisasi authtentikasi
   final authC = await Get.put(AuthenticationController(), permanent: true);
