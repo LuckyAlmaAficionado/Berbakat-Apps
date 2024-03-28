@@ -109,18 +109,15 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
                 ),
               ),
             ),
-            Column(
-              children: [],
-            ),
 
             (opsiData.contains("Gambar"))
                 ? Column(
                     children: [
-                      const Gap(10),
                       Divider(
                         thickness: 1,
                         color: darkGreyColor,
                       ),
+                      const Gap(10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -129,7 +126,7 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
                             color: darkGreyColor,
                           ),
                           CircleAvatar(
-                            radius: 30,
+                            radius: 25,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: Image.network(
@@ -142,8 +139,8 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
                               await PickImageOption(context);
                             },
                             child: Container(
-                              width: 63,
-                              height: 63,
+                              width: 50,
+                              height: 50,
                               child: (pathFile == "")
                                   ? CircleAvatar(
                                       backgroundColor: darkGreyColor,
@@ -472,80 +469,71 @@ class _PengajuanCutiViewState extends State<AjukanPerubahanDataView> {
     }
   }
 
-  showDialogOpsi(BuildContext context) async => await showModalBottomSheet(
-        context: context,
-        enableDrag: true,
-        isScrollControlled: true,
-        builder: (context) {
-          return Container(
-            height: Get.height * 0.8,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Get.back(),
-                      icon: Icon(
-                        Icons.close,
-                        color: darkGreyColor,
-                        size: 20,
-                      ),
+  showDialogOpsi(BuildContext context) async {
+    TextEditingController searchC = TextEditingController();
+    List<String> sort = [];
+    return await showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: Get.height * 0.8,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Get.back(),
+                    icon: Icon(
+                      Icons.close,
+                      color: darkGreyColor,
+                      size: 20,
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      "Tipe cuti",
-                      style: blackTextStyle.copyWith(
-                        fontWeight: semiBold,
-                        fontSize: 18,
-                      ),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    "Tipe cuti",
+                    style: blackTextStyle.copyWith(
+                      fontWeight: semiBold,
+                      fontSize: 18,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 15),
-
-                // ... textfield
-                SizedBox(
-                  height: 50,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(0),
-                      hintText: "Cari...",
-                      hintStyle: darkGreyTextStyle.copyWith(
-                        fontWeight: extraLight,
-                      ),
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
+              const SizedBox(height: 15),
+              // ... jenis cuti
+              Expanded(
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+                  children: List.generate(
+                    (sort.isEmpty) ? opsiPerubahanData.length : sort.length,
+                    (index) => ListTile(
+                      onTap: () {
+                        opsiData = opsiPerubahanData[index];
+                        Get.back();
+                      },
+                      title: Text(
+                        (sort.isEmpty) ? opsiPerubahanData[index] : sort[index],
+                        style: darkGreyTextStyle.copyWith(
+                          fontWeight: regular,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                 ),
-
-                // ... jenis cuti
-                Expanded(
-                  child: ListView(
-                    children: List.generate(
-                      opsiPerubahanData.length,
-                      (index) => ListTile(
-                        onTap: () {
-                          opsiData = opsiPerubahanData[index];
-                          Get.back();
-                        },
-                        title: Text(opsiPerubahanData[index]),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-      );
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
 
 // ignore: must_be_immutable

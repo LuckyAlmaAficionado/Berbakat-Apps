@@ -60,18 +60,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(SliderPageController()).checkCarouselStatus();
 
-    // return GetMaterialApp(
-    //   title: "BERBAKAT",
-    //   debugShowCheckedModeBanner: false,
-    //   theme: ThemeData(useMaterial3: false),
-    //   initialRoute: Routes.ANGGOTA_TIM,
-    //   getPages: AppPages.routes,
-    //   localizationsDelegates: [
-    //     GlobalWidgetsLocalizations.delegate,
-    //     GlobalMaterialLocalizations.delegate,
-    //     MonthYearPickerLocalizations.delegate,
-    //   ],
-    // );
+    return GetMaterialApp(
+      title: "BERBAKAT",
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: false),
+      initialRoute: Routes.DASHBOARD_PAGE,
+      getPages: AppPages.routes,
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
+    );
 
     return FutureBuilder(
       future: authC.validatorPIN(),

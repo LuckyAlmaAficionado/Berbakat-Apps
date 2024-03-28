@@ -52,7 +52,7 @@ TextStyle redTextStyle = GoogleFonts.outfit(
 TextStyle appBarTextStyle = GoogleFonts.outfit(
   fontWeight: regular,
   color: whiteColor,
-  fontSize: 18,
+  fontSize: 16,
 );
 
 // .. FONTWEIGHT
